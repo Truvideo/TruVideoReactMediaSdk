@@ -17,6 +17,6 @@ const TruVideoReactMediaSdk = NativeModules.TruVideoReactMediaSdk
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return TruVideoReactMediaSdk.multiply(a, b);
+export function uploadMedia(filePath: String): Promise<String> {
+  return TruVideoReactMediaSdk.uploadMedia(filePath);
 }

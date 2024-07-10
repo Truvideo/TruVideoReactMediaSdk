@@ -1,12 +1,25 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'truvideo-react-media-sdk';
+import { NativeEventEmitter, NativeModules } from 'react-native';
 
 export default function App() {
   const [result, setResult] = useState<number | undefined>();
 
   useEffect(() => {
-    multiply(3, 7).then(setResult);
+    const eventEmitter = new NativeEventEmitter(
+      NativeModules.TruVideoReactMediaSdk
+    );
+    let eventListener = eventEmitter.addListener(
+      'onError' || 'onProgress' || 'onComplete',
+      (event) => {
+        setResult(event);
+        console.log(event);
+      }
+    );
+
+    return () => {
+      eventListener.remove();
+    };
   }, []);
 
   return (
