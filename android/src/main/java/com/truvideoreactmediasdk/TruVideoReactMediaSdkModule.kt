@@ -67,6 +67,7 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
           "id" to id,
           "response" to response
         )
+        promise.resolve(gson.toJson(mainResponse))
 
         sendEvent(reactApplicationContext,"onComplete",gson.toJson(mainResponse))
       }
@@ -77,7 +78,6 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
           "id" to id,
           "progress" to progress
         )
-
         sendEvent(reactApplicationContext,"onProgress",gson.toJson(mainResponse))
       }
 
@@ -87,6 +87,7 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
           "id" to id,
           "error" to ex
         )
+        promise.resolve(gson.toJson(mainResponse))
         sendEvent(reactApplicationContext,"onError",gson.toJson(mainResponse))
       }
     })
