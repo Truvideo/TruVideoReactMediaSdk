@@ -1,0 +1,24 @@
+{
+  "originHash" : "c5141a0fb158f86898d33094ac07a2c973b1b2f0b9496790ab8678d382958835",
+  "pins" : [
+    {
+      "identity" : "aws-sdk-ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aws-amplify/aws-sdk-ios-spm",
+      "state" : {
+        "revision" : "ca31418963a90bac80538e13f6b7af87ea14d279",
+        "version" : "2.33.4"
+      }
+    },
+    {
+      "identity" : "truvideo-sdk-ios-media",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Truvideo/truvideo-sdk-ios-media.git",
+      "state" : {
+        "revision" : "e5fb74e33f7e99a5b5c5033d2a173b772b44e6a1",
+        "version" : "71.1.2"
+      }
+    }
+  ],
+  "version" : 3
+}
