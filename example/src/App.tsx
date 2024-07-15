@@ -1,32 +1,37 @@
-import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import { useEffect } from 'react';
+import {
+  StyleSheet,
+  View,
+  NativeEventEmitter,
+  NativeModules,
+} from 'react-native';
 
 export default function App() {
-  const [result, setResult] = useState<number | undefined>();
-
   useEffect(() => {
     const eventEmitter = new NativeEventEmitter(
       NativeModules.TruVideoReactMediaSdk
     );
-    let eventListener = eventEmitter.addListener(
-      'onError' || 'onProgress' || 'onComplete',
-      (event) => {
-        setResult(event);
-        console.log(event);
-      }
-    );
+
+    const onUploadProgress = eventEmitter.addListener('onProgress', (event) => {
+      console.log('onProgress event:', event);
+    });
+
+    const onUploadError = eventEmitter.addListener('onError', (event) => {
+      console.log('onError event:', event);
+    });
+
+    const onUploadComplete = eventEmitter.addListener('onComplete', (event) => {
+      console.log('onComplete event:', event);
+    });
 
     return () => {
-      eventListener.remove();
+      onUploadProgress.remove();
+      onUploadError.remove();
+      onUploadComplete.remove();
     };
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
-  );
+  return <View style={styles.container} />;
 }
 
 const styles = StyleSheet.create({
