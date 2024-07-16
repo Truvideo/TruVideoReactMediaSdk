@@ -33,7 +33,7 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
   @ReactMethod
   fun uploadFile(filePath: String,tag : String,metaData : String,promise: Promise) {
     CoroutineScope(Dispatchers.Main).launch {
-      uploadFile(reactApplicationContext,filePath,promise)
+      uploadFile(reactApplicationContext,filePath,tag,metaData,promise)
     }
   }
 
