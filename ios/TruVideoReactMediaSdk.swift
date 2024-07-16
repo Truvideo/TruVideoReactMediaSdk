@@ -5,54 +5,45 @@ import React
 @objc(TruVideoReactMediaSdk)
 class TruVideoReactMediaSdk: NSObject {
     private var disposeBag = Set<AnyCancellable>()
-
-    @objc(multiply:withB:withResolver:withRejecter:)
-    func multiply(a: Float, b: Float, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) -> Void {
-        resolve(a * b)
-    }
-
+    
     @objc(uploadMedia:withTag:withMetaData:withResolver:withRejecter:)
-    func uploadMedia(filePath: String,tag : String,metaData : String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        let path = "file://\(filePath)"
-        uploadFile(videoPath: path,tag : tag, metaData : metaData, resolve: resolve, reject: reject)
-    }
-
-    // Function to send events to React Native
-    func sendEvent(withName name: String, body: [String: Any]) {
-        guard let bridge = RCTBridge.current() else { return }
-        bridge.eventDispatcher().sendAppEvent(withName: name, body: body)
-    }
-  
-    // Function to upload a video file to the cloud
-    func uploadFile(videoPath: String,tag : String,metaData : String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
-        guard let fileURL = URL(string: videoPath) else {
+    func uploadMedia(filePath: String, tag: String, metaData: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        guard let fileURL = URL(string: "file://\(filePath)") else {
             reject("INVALID_URL", "The file URL is invalid", nil)
             return
         }
 
-        // Media Uploading
-        // Create a file upload request using TruvideoSdkMedia uploader
+        do {
+            let builder = try createFileUploadRequestBuilder(fileURL: fileURL, tag: tag, metaData: metaData)
+            try executeUploadRequest(builder: builder, resolve: resolve, reject: reject)
+        } catch {
+            reject("UPLOAD_ERROR", "Upload failed", error)
+        }
+    }
+    
+    private func createFileUploadRequestBuilder(fileURL: URL, tag: String, metaData: String) throws -> TruvideoSdkMedia.FileUploadRequestBuilder {
         let builder = TruvideoSdkMedia.FileUploadRequestBuilder(fileURL: fileURL)
         
-        // Tags
-        builder.addTag("key", "value")
-        builder.addTag("color", "red")
-        builder.addTag("order-number", "123")
+        // Convert tag JSON string to dictionary
+        let tagDict = try convertToDictionary(from: tag)
+        for (key, value) in tagDict {
+            builder.addTag(key, value)
+        }
         
-        // Metadata
-        var metadata = Metadata()
-        metadata["key"] = "value"
-        metadata["key1"] = 1
-        metadata["key2"] = [4, 5, 6]
-        builder.setMetadata(metadata)
+        // Convert metadata JSON string to Metadata type
+        let metadataObj = try convertToMetadata(from: metaData)
+        builder.setMetadata(metadataObj)
         
+        return builder
+    }
+    
+    private func executeUploadRequest(builder: TruvideoSdkMedia.FileUploadRequestBuilder, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) throws {
         let request = builder.build()
         
         // Print the file upload request for debugging
         print("fileUploadRequest: ", request.id.uuidString)
         
         // Completion of request
-        // Handle the completion of the file upload request
         let completeCancellable = request.completionHandler
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { receiveCompletion in
@@ -67,10 +58,9 @@ class TruVideoReactMediaSdk: NSObject {
             }, receiveValue: { uploadedResult in
                 // Upon successful upload, retrieve the uploaded file URL
                 let uploadedFileURL = uploadedResult.uploadedFileURL
-                let metaData = uploadedResult.metadata
+                let metadataDict = self.convertMetadataToDictionary(uploadedResult.metadata)
                 let tags = uploadedResult.tags
                 let transcriptionURL = uploadedResult.transcriptionURL
-               // let type = uploadedResult.type.rawValue
                 let transcriptionLength = uploadedResult.transcriptionLength
                 let id = request.id.uuidString
                 print("uploadedResult: ", uploadedResult)
@@ -79,11 +69,10 @@ class TruVideoReactMediaSdk: NSObject {
                 let mainResponse: [String: Any] = [
                     "id": id, // Generate a unique ID for the event
                     "uploadedFileURL": uploadedFileURL.absoluteString,
-                    "metaData": metaData,
+                    "metaData": metadataDict,
                     "tags": tags,
                     "transcriptionURL": transcriptionURL,
                     "transcriptionLength": transcriptionLength
-                   // "type": type
                 ]
                 
                 // resolve
@@ -95,27 +84,95 @@ class TruVideoReactMediaSdk: NSObject {
         completeCancellable.store(in: &disposeBag)
         
         // Progress of request
-        // Track the progress of the file upload request
         let progress = request.progressHandler
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { progress in
-                // Handle progress updates
                 let mainResponse: [String: Any] = [
                     "id": UUID().uuidString, // Generate a unique ID for the event
                     "progress": String(format: " %.2f %", progress.percentage * 100)
                 ]
-               // print("Progress: \(progress)") // Log progress for debugging
                 self.sendEvent(withName: "onProgress", body: mainResponse)
             })
         
         // Store the progress handler in the dispose bag to avoid premature deallocation
         progress.store(in: &disposeBag)
         
-        do {
-            try request.upload()
-        } catch {
-            // Handle error
-            reject("UPLOAD_ERROR", "Upload failed", error)
+        try request.upload()
+    }
+    
+    private func convertToDictionary(from jsonString: String) throws -> [String: String] {
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            throw NSError(domain: "Invalid JSON string", code: 0, userInfo: nil)
         }
+        
+        return try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: String] ?? [:]
+    }
+    
+    private func convertToMetadata(from jsonString: String) throws -> Metadata {
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            throw NSError(domain: "Invalid JSON string", code: 0, userInfo: nil)
+        }
+        
+        guard let metadataDict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
+            throw NSError(domain: "Invalid JSON format", code: 0, userInfo: nil)
+        }
+        
+        return convertToMetadata(metadataDict)
+    }
+    
+    private func convertToMetadata(_ dict: [String: Any]) -> Metadata {
+        var metadata = Metadata()
+        for (key, value) in dict {
+            if let metadataValue = convertToMetadataValue(value) {
+                metadata[key] = metadataValue
+            }
+        }
+        return metadata
+    }
+    
+    private func convertToMetadataValue(_ value: Any) -> MetadataValue? {
+        if value is NSNull {
+            return nil
+        } else if let value = value as? String {
+            return .string(value)
+        } else if let value = value as? Int {
+            return .int(value)
+        } else if let value = value as? Float {
+            return .float(value)
+        } else if let value = value as? [Any] {
+            return .array(value.compactMap { convertToMetadataValue($0) })
+        } else if let value = value as? [String: Any] {
+            return .dictionary(convertToMetadata(value))
+        }
+        return nil
+    }
+    
+    private func convertMetadataToDictionary(_ metadata: Metadata) -> [String: Any] {
+        var dict = [String: Any]()
+        for (key, value) in metadata {
+            dict[key] = convertMetadataValueToAny(value)
+        }
+        return dict
+    }
+    
+    private func convertMetadataValueToAny(_ value: MetadataValue) -> Any {
+        switch value {
+        case .string(let stringValue):
+            return stringValue
+        case .int(let intValue):
+            return intValue
+        case .float(let floatValue):
+            return floatValue
+        case .array(let arrayValue):
+            return arrayValue.map { convertMetadataValueToAny($0) }
+        case .dictionary(let dictValue):
+            return convertMetadataToDictionary(dictValue)
+        }
+    }
+    
+    // Function to send events to React Native
+    private func sendEvent(withName name: String, body: [String: Any]) {
+        guard let bridge = RCTBridge.current() else { return }
+        bridge.eventDispatcher().sendAppEvent(withName: name, body: body)
     }
 }
