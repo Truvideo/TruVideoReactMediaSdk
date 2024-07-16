@@ -18,6 +18,7 @@ import com.truvideo.sdk.media.model.TruvideoSdkMediaFileUploadRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 
 class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
@@ -40,18 +41,18 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
   suspend fun uploadFile(context: Context, filePath: String,tag : String,metaData : String,promise: Promise){
     // Create a file upload request builder
     val builder = TruvideoSdkMedia.FileUploadRequestBuilder(filePath)
-    builder.addTag("key", "value")
-    builder.addTag("color", "red")
-    builder.addTag("order-number", "123")
-
+    val jsonTag = JSONObject(tag)
+    builder.addTag("key",jsonTag.getString("key"))
+    builder.addTag("color", jsonTag.getString("color"))
+    builder.addTag("order-number", jsonTag.getString("orderNumber"))
     // Metadata
+    val jsonMetadata = JSONObject(metaData)
+    Log.d("TAG", "uploadFile: $jsonTag , $jsonMetadata")
     builder.setMetadata(
       mapOf<String, Any?>(
-        "key" to "value",
-        "key1" to 1,
-        "nested" to mapOf<String, Any?>(
-          "key2" to 2
-        )
+        "key" to jsonMetadata.getString("key"),
+        "key1" to jsonMetadata.getString("key1"),
+        "nested" to jsonMetadata.getJSONArray("key2")
       )
     )
 

@@ -23,6 +23,10 @@ const TruVideoReactMediaSdk = NativeModules.TruVideoReactMediaSdk
  * @param {string} filePath - The path of the media file to upload
  * @return {Promise<string>} A promise that resolves with the result of the media upload
  */
-export function uploadMedia(filePath: string): Promise<string> {
-  return TruVideoReactMediaSdk.uploadMedia(filePath);
+export function uploadMedia(
+  filePath: string,
+  tag: string,
+  metaData: string
+): Promise<string> {
+  return TruVideoReactMediaSdk.uploadMedia(filePath, tag, metaData);
 }
