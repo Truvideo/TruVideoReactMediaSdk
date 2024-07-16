@@ -7,6 +7,8 @@ RCT_EXTERN_METHOD(multiply:(float)a withB:(float)b
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(uploadMedia:(NSString)filePath
+                 withTag:(NSString)tag
+                 withMetaData:(NSString)metaData
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
