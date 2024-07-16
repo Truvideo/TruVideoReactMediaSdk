@@ -77,7 +77,7 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
         // Handle progress
         val mainResponse = mapOf<String, Any?>(
           "id" to id,
-          "progress" to progress
+          "progress" to (progress*100)
         )
         sendEvent(reactApplicationContext,"onProgress",gson.toJson(mainResponse))
       }
