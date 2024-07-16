@@ -31,11 +31,7 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
   // See https://reactnative.dev/docs/native-modules-android
 
   @ReactMethod
-<<<<<<< HEAD
-  fun uploadMedia(filePath: String,promise: Promise) {
-=======
-  fun uploadFile(filePath: String,tag : String,metaData : String,promise: Promise) {
->>>>>>> TruVideoReactMediaSdk_iOS
+  fun uploadMedia(filePath: String,tag : String,metaData : String,promise: Promise) {
     CoroutineScope(Dispatchers.Main).launch {
       uploadFile(reactApplicationContext,filePath,tag,metaData,promise)
     }
