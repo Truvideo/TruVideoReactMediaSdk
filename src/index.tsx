@@ -25,8 +25,12 @@ const TruVideoReactMediaSdk = NativeModules.TruVideoReactMediaSdk
  */
 export function uploadMedia(
   filePath: string,
-  tag: string,
-  metaData: string
+  tag: object,
+  metaData: object
 ): Promise<string> {
-  return TruVideoReactMediaSdk.uploadMedia(filePath, tag, metaData);
+  return TruVideoReactMediaSdk.uploadMedia(
+    filePath,
+    JSON.stringify(tag),
+    JSON.stringify(metaData)
+  );
 }
