@@ -28,9 +28,7 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
     return NAME
   }
 
-  // Example method
-  // See https://reactnative.dev/docs/native-modules-android
-
+  // Upload Media
   @ReactMethod
   fun uploadMedia(filePath: String,tag : String,metaData : String,promise: Promise) {
     CoroutineScope(Dispatchers.Main).launch {
@@ -93,6 +91,8 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
       }
     })
   }
+
+  // broadcast event
   fun sendEvent(reactContext: ReactApplicationContext, eventName: String, progress: String) {
     reactContext
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
