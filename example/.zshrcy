@@ -1,0 +1,17 @@
+export PATH="$PATH:/Applications/development/flutter/bin" export 
+CPPFLAGS="-I/usr/local/opt/openjdk@17/include" export 
+JAVA_HOME=/usr/local/cellar/openjdk@17/17.0.12/libexec/openjdk.jdk/Contents/Home 
+export PATH="$JAVA_HOME/bin:$PATH" export PATH=$HOME/.npm-global/bin:$PATH 
+export PATH=$PATH:/Users/apple/Library/Android/sdk/platform-tools/
+
+
+
+
+
+
+
+
+
+
+
+
