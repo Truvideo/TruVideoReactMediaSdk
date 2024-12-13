@@ -6856,7 +6856,7 @@ trim-newlines@^3.0.0:
 trim-newlines@^4.0.2:
   version "4.1.1"
 
-"truvideo-react-media-sdk-example@file:/Users/apple/Desktop/TruVideoReactMediaSdk/example":
+"truvideo-react-media-sdk-example@file:/Users/apple/Documents/TruVideoReactMediaSdk/example":
   version "0.0.1"
   resolved "file:example"
   dependencies:
