@@ -12,13 +12,14 @@ import com.facebook.react.bridge.UiThreadUtil.runOnUiThread
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.google.gson.Gson
 import com.truvideo.sdk.media.TruvideoSdkMedia
-import com.truvideo.sdk.media.exception.TruvideoSdkMediaException
 import com.truvideo.sdk.media.interfaces.TruvideoSdkMediaFileUploadCallback
 import com.truvideo.sdk.media.model.TruvideoSdkMediaFileUploadRequest
+import com.truvideo.sdk.media.model.TruvideoSdkMediaMetadata
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import truvideo.sdk.common.exceptions.TruvideoSdkException
 
 
 class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
@@ -46,13 +47,12 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
     // Metadata
     val jsonMetadata = JSONObject(metaData)
     Log.d("TAG", "uploadFile: $jsonTag , $jsonMetadata")
-    builder.setMetadata(
-      mapOf<String, Any?>(
-        "key" to jsonMetadata.getString("key"),
-        "key1" to jsonMetadata.getString("key1"),
-        "nested" to jsonMetadata.getJSONArray("key2")
-      )
-    )
+    val metaData = TruvideoSdkMediaMetadata.builder()
+      .set("key",jsonMetadata.getString("key"))
+      .set("key1",jsonMetadata.getString("key1"))
+      .set("nested",jsonMetadata.getString("key2"))
+      .build()
+    builder.setMetadata(metaData)
 
     // Build the request
     val request = builder.build()
@@ -80,7 +80,7 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
         sendEvent(reactApplicationContext,"onProgress",gson.toJson(mainResponse))
       }
 
-      override fun onError(id: String, ex: TruvideoSdkMediaException) {
+      override fun onError(id: String, ex: TruvideoSdkException) {
         // Handle error
         val mainResponse = mapOf<String, Any?>(
           "id" to id,
