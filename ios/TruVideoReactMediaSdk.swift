@@ -31,9 +31,10 @@ class TruVideoReactMediaSdk: NSObject {
         }
         
         // Convert metadata JSON string to Metadata type
-        let metadataObj = try convertToMetadata(from: metaData)
-        builder.setMetadata(metadataObj)
-        
+        let metadataObj = try convertToDictionary(from: metaData)
+        for (key, value) in tagDict {
+            builder.addMetadata(key, value)
+        }
         return builder
     }
     
@@ -58,7 +59,7 @@ class TruVideoReactMediaSdk: NSObject {
             }, receiveValue: { uploadedResult in
                 // Upon successful upload, retrieve the uploaded file URL
                 let uploadedFileURL = uploadedResult.uploadedFileURL
-                let metadataDict = self.convertMetadataToDictionary(uploadedResult.metadata)
+                let metadataDict = uploadedResult.metadata
                 let tags = uploadedResult.tags
                 let transcriptionURL = uploadedResult.transcriptionURL
                 let transcriptionLength = uploadedResult.transcriptionLength
@@ -108,67 +109,67 @@ class TruVideoReactMediaSdk: NSObject {
         return try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: String] ?? [:]
     }
     
-    private func convertToMetadata(from jsonString: String) throws -> Metadata {
-        guard let jsonData = jsonString.data(using: .utf8) else {
-            throw NSError(domain: "Invalid JSON string", code: 0, userInfo: nil)
-        }
-        
-        guard let metadataDict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
-            throw NSError(domain: "Invalid JSON format", code: 0, userInfo: nil)
-        }
-        
-        return convertToMetadata(metadataDict)
-    }
-    
-    private func convertToMetadata(_ dict: [String: Any]) -> Metadata {
-        var metadata = Metadata()
-        for (key, value) in dict {
-            if let metadataValue = convertToMetadataValue(value) {
-                metadata[key] = metadataValue
-            }
-        }
-        return metadata
-    }
-    
-    private func convertToMetadataValue(_ value: Any) -> MetadataValue? {
-        if value is NSNull {
-            return nil
-        } else if let value = value as? String {
-            return .string(value)
-        } else if let value = value as? Int {
-            return .int(value)
-        } else if let value = value as? Float {
-            return .float(value)
-        } else if let value = value as? [Any] {
-            return .array(value.compactMap { convertToMetadataValue($0) })
-        } else if let value = value as? [String: Any] {
-            return .dictionary(convertToMetadata(value))
-        }
-        return nil
-    }
-    
-    private func convertMetadataToDictionary(_ metadata: Metadata) -> [String: Any] {
-        var dict = [String: Any]()
-        for (key, value) in metadata {
-            dict[key] = convertMetadataValueToAny(value)
-        }
-        return dict
-    }
-    
-    private func convertMetadataValueToAny(_ value: MetadataValue) -> Any {
-        switch value {
-        case .string(let stringValue):
-            return stringValue
-        case .int(let intValue):
-            return intValue
-        case .float(let floatValue):
-            return floatValue
-        case .array(let arrayValue):
-            return arrayValue.map { convertMetadataValueToAny($0) }
-        case .dictionary(let dictValue):
-            return convertMetadataToDictionary(dictValue)
-        }
-    }
+//    private func convertToMetadata(from jsonString: String) throws -> Metadata {
+//        guard let jsonData = jsonString.data(using: .utf8) else {
+//            throw NSError(domain: "Invalid JSON string", code: 0, userInfo: nil)
+//        }
+//        
+//        guard let metadataDict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
+//            throw NSError(domain: "Invalid JSON format", code: 0, userInfo: nil)
+//        }
+//        
+//        return convertToMetadata(metadataDict)
+//    }
+//    
+//    private func convertToMetadata(_ dict: [String: Any]) -> Metadata {
+//        var metadata = Metadata()
+//        for (key, value) in dict {
+//            if let metadataValue = convertToMetadataValue(value) {
+//                metadata[key] = metadataValue
+//            }
+//        }
+//        return metadata
+//    }
+//    
+//    private func convertToMetadataValue(_ value: Any) -> MetadataValue? {
+//        if value is NSNull {
+//            return nil
+//        } else if let value = value as? String {
+//            return .string(value)
+//        } else if let value = value as? Int {
+//            return .int(value)
+//        } else if let value = value as? Float {
+//            return .float(value)
+//        } else if let value = value as? [Any] {
+//            return .array(value.compactMap { convertToMetadataValue($0) })
+//        } else if let value = value as? [String: Any] {
+//            return .dictionary(convertToMetadata(value))
+//        }
+//        return nil
+//    }
+//    
+//    private func convertMetadataToDictionary(_ metadata: Metadata) -> [String: Any] {
+//        var dict = [String: Any]()
+//        for (key, value) in metadata {
+//            dict[key] = convertMetadataValueToAny(value)
+//        }
+//        return dict
+//    }
+//    
+//    private func convertMetadataValueToAny(_ value: MetadataValue) -> Any {
+//        switch value {
+//        case .string(let stringValue):
+//            return stringValue
+//        case .int(let intValue):
+//            return intValue
+//        case .float(let floatValue):
+//            return floatValue
+//        case .array(let arrayValue):
+//            return arrayValue.map { convertMetadataValueToAny($0) }
+//        case .dictionary(let dictValue):
+//            return convertMetadataToDictionary(dictValue)
+//        }
+  //  }
     
     // Function to send events to React Native
     private func sendEvent(withName name: String, body: [String: Any]) {
