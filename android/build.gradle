@@ -90,12 +90,27 @@ repositories {
 def kotlin_version = getExtOrDefault("kotlinVersion")
 
 dependencies {
-  // For < 0.71, this will be from the local maven repo
-  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
-  //noinspection GradleDynamicVersion
+  // React Native
   implementation "com.facebook.react:react-native:+"
+
+  // Kotlin
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'com.github.Truvideo:truvideo-sdk-android-media:76.2.5'
+  implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.4.1"
+
+  // Truvideo SDK
+  implementation 'com.github.Truvideo:truvideo-sdk-android-media:78.1.9'
   implementation 'com.google.code.gson:gson:2.10.1'
+
+  // Kodein DI
+  implementation "org.kodein.di:kodein-di:7.18.0"
+
+  // Kotlin Multiplatform Settings
+  implementation "com.russhwolf:multiplatform-settings:1.0.0"          // common
+//  implementation("com.russhwolf:multiplatform-settings-android:1.0.0") {
+//    // Exclude debug variant to avoid duplicates
+//    exclude group: "com.russhwolf", module: "multiplatform-settings-android-debug"
+//  }
+
 }
+
 

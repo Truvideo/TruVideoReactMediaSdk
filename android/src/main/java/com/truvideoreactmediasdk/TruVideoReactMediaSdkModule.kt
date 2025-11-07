@@ -29,6 +29,17 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
     return NAME
   }
 
+    // Required by React Native for event emitter
+    @ReactMethod
+    fun addListener(eventName: String) {
+        // Keep empty — React Native calls this when JS subscribes to events
+    }
+
+    @ReactMethod
+    fun removeListeners(count: Int) {
+        // Keep empty — React Native calls this when JS unsubscribes
+    }
+
   // Upload Media
   @ReactMethod
   fun uploadMedia(filePath: String,tag : String,metaData : String,promise: Promise) {
