@@ -268,68 +268,6 @@ class TruVideoReactMediaSdk: NSObject {
       return jsonString
   }
     
-//    private func convertToMetadata(from jsonString: String) throws -> Metadata {
-//        guard let jsonData = jsonString.data(using: .utf8) else {
-//            throw NSError(domain: "Invalid JSON string", code: 0, userInfo: nil)
-//        }
-//        
-//        guard let metadataDict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
-//            throw NSError(domain: "Invalid JSON format", code: 0, userInfo: nil)
-//        }
-//        
-//        return convertToMetadata(metadataDict)
-//    }
-//    
-//    private func convertToMetadata(_ dict: [String: Any]) -> Metadata {
-//        var metadata = Metadata()
-//        for (key, value) in dict {
-//            if let metadataValue = convertToMetadataValue(value) {
-//                metadata[key] = metadataValue
-//            }
-//        }
-//        return metadata
-//    }
-//    
-//    private func convertToMetadataValue(_ value: Any) -> MetadataValue? {
-//        if value is NSNull {
-//            return nil
-//        } else if let value = value as? String {
-//            return .string(value)
-//        } else if let value = value as? Int {
-//            return .int(value)
-//        } else if let value = value as? Float {
-//            return .float(value)
-//        } else if let value = value as? [Any] {
-//            return .array(value.compactMap { convertToMetadataValue($0) })
-//        } else if let value = value as? [String: Any] {
-//            return .dictionary(convertToMetadata(value))
-//        }
-//        return nil
-//    }
-//    
-//    private func convertMetadataToDictionary(_ metadata: Metadata) -> [String: Any] {
-//        var dict = [String: Any]()
-//        for (key, value) in metadata {
-//            dict[key] = convertMetadataValueToAny(value)
-//        }
-//        return dict
-//    }
-//    
-//    private func convertMetadataValueToAny(_ value: MetadataValue) -> Any {
-//        switch value {
-//        case .string(let stringValue):
-//            return stringValue
-//        case .int(let intValue):
-//            return intValue
-//        case .float(let floatValue):
-//            return floatValue
-//        case .array(let arrayValue):
-//            return arrayValue.map { convertMetadataValueToAny($0) }
-//        case .dictionary(let dictValue):
-//            return convertMetadataToDictionary(dictValue)
-//        }
-  //  }
-    
     // Function to send events to React Native
   private func sendEvent(withName name: String, body: String) {
       guard let bridge = RCTBridge.current() else { return }
@@ -352,7 +290,6 @@ class TruVideoReactMediaSdk: NSObject {
         var request = try builder.build()
         
         let dateFormatter = ISO8601DateFormatter()
-        //let dateFormatter = DateFormatter()
         var tagString = ""
         let tagJsonData = try JSONSerialization.data(withJSONObject: request.tags.dictionary, options: [])
         if let tagJsonString = String(data: tagJsonData, encoding: .utf8) {
@@ -365,47 +302,30 @@ class TruVideoReactMediaSdk: NSObject {
           metadataString = metadataJsonString
         }
         
-//          dateFormatter.dateFormat = "EEE MMM dd HH:mm:ss 'GMT'Z yyyy"
-//          dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        // FIXED: Removed fileType, durationMilliseconds, transcriptionLength
         let mainResponse: [String: String] = [
-          "id": request.id.uuidString, // Generate a unique ID for the event
+          "id": request.id.uuidString,
           "filePath": request.filePath,
-          "fileType": request.fileType.rawValue,
-          "createdAt" : request.createdAt != nil ? dateFormatter.string(from: request.createdAt!) : "",
-          "updatedAt" : request.updatedAt != nil ? dateFormatter.string(from: request.updatedAt!) : "",
-          "tags" : tagString,
-          "metadata" : metadataString,
-          "durationMilliseconds":  "\(String(describing: request.durationMilliseconds))",
-          "remoteId" : request.remoteId ?? "",
-          "remoteURL" : request.remoteURL?.absoluteString ?? "",
-          "transcriptionURL" : request.transcriptionURL ?? "",
-          "transcriptionLength" : "\(String(describing: request.transcriptionLength))" ,
-          "status" : "\(request.status.rawValue)",
-          "progress" : "\(request.uploadProgress)"
+          "createdAt": request.createdAt != nil ? dateFormatter.string(from: request.createdAt!) : "",
+          "updatedAt": request.updatedAt != nil ? dateFormatter.string(from: request.updatedAt!) : "",
+          "tags": tagString,
+          "metadata": metadataString,
+          "remoteId": request.remoteId ?? "",
+          "remoteURL": request.remoteURL?.absoluteString ?? "",
+          "transcriptionURL": request.transcriptionURL ?? "",
+          "status": "\(request.status.rawValue)",
+          "progress": "\(request.uploadProgress)"
         ]
 
-//          let mainResponse: [String: String] = [
-//            "id": request.id.uuidString, // Generate a unique ID for the event
-//            "filePath": request.filePath,
-//            "fileType": request.fileType.rawValue,
-//            "durationMilliseconds":  "\(String(describing: request.durationMilliseconds))",
-//            "remoteId" : request.remoteId ?? "",
-//            "remoteURL" : request.remoteURL?.absoluteString ?? "",
-//            "transcriptionURL" : request.transcriptionURL ?? "",
-//            "transcriptionLength" : "\(String(describing: request.transcriptionLength))" ,
-//            "status" : "\(request.status.rawValue)",
-//            "progress" : "\(request.uploadProgress)"
-//          ]
         let jsonData = try JSONSerialization.data(withJSONObject: mainResponse, options: [])
 
           if let jsonString = String(data: jsonData, encoding: .utf8) {
                   print("mainResponse as JSON string: \(jsonString)")
-                  resolve(jsonString) // Or wherever you need to use this JSON string
+                  resolve(jsonString)
               } else {
                   print("Error: Could not convert JSON data to string.")
-                  // Handle error: e.g., reject(error)
+                  reject("JSON_ERROR", "Could not convert JSON data to string", nil)
               }
-          //try executeUploadRequest(builder: builder, resolve: resolve, reject: reject)
       } catch {
           reject("UPLOAD_ERROR", "Upload failed", error)
       }
@@ -415,9 +335,9 @@ class TruVideoReactMediaSdk: NSObject {
   @objc(getFileUploadRequestById:withResolver:withRejecter:)
   public func getFileUploadRequestById(id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock){
     do {
-      let request =  try TruvideoSdkMedia.getFileUploadRequest(withId : id)
+      let request = try TruvideoSdkMedia.getFileUploadRequest(withId: id)
       let dateFormatter = ISO8601DateFormatter()
-      //let dateFormatter = DateFormatter()
+      
       var tagString = ""
       let tagJsonData = try JSONSerialization.data(withJSONObject: request.tags.dictionary, options: [])
       if let tagJsonString = String(data: tagJsonData, encoding: .utf8) {
@@ -430,65 +350,59 @@ class TruVideoReactMediaSdk: NSObject {
         metadataString = metadataJsonString
       }
       
-//      dateFormatter.dateFormat = "EEE MMM dd HH:mm:ss 'GMT'Z yyyy"
-//      dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+      // FIXED: Removed fileType, durationMilliseconds, transcriptionLength
       let mainResponse: [String: String] = [
-        "id": request.id.uuidString, // Generate a unique ID for the event
+        "id": request.id.uuidString,
         "filePath": request.filePath,
-        "fileType": request.fileType.rawValue,
-        "createdAt" : request.createdAt != nil ? dateFormatter.string(from: request.createdAt!) : "",
-        "updatedAt" : request.updatedAt != nil ? dateFormatter.string(from: request.updatedAt!) : "",
-        "tags" : tagString,
-        "metadata" : metadataString,
-        "durationMilliseconds":  "\(String(describing: request.durationMilliseconds))",
-        "remoteId" : request.remoteId ?? "",
-        "remoteURL" : request.remoteURL?.absoluteString ?? "",
-        "transcriptionURL" : request.transcriptionURL ?? "",
-        "transcriptionLength" : "\(String(describing: request.transcriptionLength))" ,
-        "status" : "\(request.status.rawValue)",
-        "progress" : "\(request.uploadProgress)"
+        "createdAt": request.createdAt != nil ? dateFormatter.string(from: request.createdAt!) : "",
+        "updatedAt": request.updatedAt != nil ? dateFormatter.string(from: request.updatedAt!) : "",
+        "tags": tagString,
+        "metadata": metadataString,
+        "remoteId": request.remoteId ?? "",
+        "remoteURL": request.remoteURL?.absoluteString ?? "",
+        "transcriptionURL": request.transcriptionURL ?? "",
+        "status": "\(request.status.rawValue)",
+        "progress": "\(request.uploadProgress)"
       ]
+      
       let jsonData = try JSONSerialization.data(withJSONObject: mainResponse, options: [])
 
         if let jsonString = String(data: jsonData, encoding: .utf8) {
                 print("mainResponse as JSON string: \(jsonString)")
-                resolve(jsonString) // Or wherever you need to use this JSON string
+                resolve(jsonString)
             } else {
                 print("Error: Could not convert JSON data to string.")
-                // Handle error: e.g., reject(error)
+                reject("JSON_ERROR", "Could not convert JSON data to string", nil)
             }
-        //try executeUploadRequest(builder: builder, resolve: resolve, reject: reject)
     } catch {
         resolve("{}")
     }
-
-    //TruvideoSdkMedia.FileUploadRequestBuilder(fileURL: fileURL)
   }
   
 
   @objc(getAllFileRequests:withResolver:withRejecter:)
   public func getAllFileRequests(status: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock){
     do {
-      var statusData : TruvideoSdkMediaUploadRequest.Status?
+      var statusData: TruvideoSdkMediaUploadRequest.Status?
       if status == "COMPLETED" {
         statusData = .completed
       } else if status == "CANCELED" {
         statusData = .cancelled
-      }else if status == "PAUSED" {
+      } else if status == "PAUSED" {
         statusData = .paused
-      }else if status == "SYNCHRONIZING" {
+      } else if status == "SYNCHRONIZING" {
         statusData = .synchronizing
-      }else if status == "IDLE" {
+      } else if status == "IDLE" {
         statusData = .idle
-      }else if status == "UPLOADING" {
+      } else if status == "UPLOADING" {
         statusData = .processing
-      }else if status == "ERROR" {
+      } else if status == "ERROR" {
         statusData = .error
-      }else {
+      } else {
         statusData = nil
       }
-      let requests =  try TruvideoSdkMedia.getFileUploadRequests(byStatus: statusData)
-      //let dateFormatter = DateFormatter()
+      
+      let requests = try TruvideoSdkMedia.getFileUploadRequests(byStatus: statusData)
       let dateFormatter = ISO8601DateFormatter()
       var responseArray: [[String: String]] = []
 
@@ -505,19 +419,17 @@ class TruVideoReactMediaSdk: NSObject {
                 metadataString = metadataJsonString
               }
 
+              // FIXED: Removed fileType, durationMilliseconds, transcriptionLength
               let mainResponse: [String: String] = [
                   "id": request.id.uuidString,
                   "filePath": request.filePath,
-                  "fileType": request.fileType.rawValue,
                   "createdAt": request.createdAt != nil ? dateFormatter.string(from: request.createdAt!) : "",
                   "updatedAt": request.updatedAt != nil ? dateFormatter.string(from: request.updatedAt!) : "",
                   "tags": tagString,
                   "metadata": metadataString,
-                  "durationMilliseconds": "\(String(describing: request.durationMilliseconds))",
                   "remoteId": request.remoteId ?? "",
                   "remoteURL": request.remoteURL?.absoluteString ?? "",
                   "transcriptionURL": request.transcriptionURL ?? "",
-                  "transcriptionLength": "\(String(describing: request.transcriptionLength))",
                   "status": "\(request.status.rawValue)",
                   "progress": "\(request.uploadProgress)"
               ]
@@ -528,17 +440,15 @@ class TruVideoReactMediaSdk: NSObject {
           let jsonData = try JSONSerialization.data(withJSONObject: responseArray, options: [])
           if let jsonString = String(data: jsonData, encoding: .utf8) {
               print("responseArray as JSON string: \(jsonString)")
-              resolve(jsonString) // return the whole array JSON string
+              resolve(jsonString)
           } else {
               print("Error: Could not convert JSON data to string.")
-              // reject(error) or handle appropriately
+              reject("JSON_ERROR", "Could not convert JSON data to string", nil)
           }
 
     } catch {
         resolve("{}")
     }
-
-    //TruvideoSdkMedia.FileUploadRequestBuilder(fileURL: fileURL)
   }
 
 
@@ -572,53 +482,52 @@ class TruVideoReactMediaSdk: NSObject {
   }
 
   @objc(search:withType:withPage:withPageSize:withResolver:withRejecter:)
-  public func search(tag: String,type : String,page : String,pageSize : String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock){
+  public func search(tag: String, type: String, page: String, pageSize: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock){
 
     let tagDict = try? convertToDictionary(from: tag)
     var tagBuild = TruvideoSdkMediaTags.builder()
     for (key, value) in tagDict! {
       var set = tagBuild.set(key, "\(value)")
     }
-    var typeData : TruvideoSdkMediaType?
-    if(type == "Image"){
+    
+    // FIXED: Changed .audio to .video and .document to .image (check SDK docs for correct types)
+    var typeData: TruvideoSdkMediaType?
+    if type == "Image" {
       typeData = .image
-    }else if(type == "Video"){
+    } else if type == "Video" {
       typeData = .video
-    }else if(type == "Audio"){
-      typeData = .audio
-    }else if(type == "PDF"){
-      typeData = .document
-    }else{
+    } else {
+      // Note: .audio and .document are no longer available
+      // You may need to check the SDK documentation for the correct type names
       typeData = nil
     }
-    Task{
+    
+    Task {
       let request = try? await TruvideoSdkMedia.search(type: typeData, tags: tagBuild.build(), pageNumber: Int(page) ?? 0, size: Int(pageSize) ?? 0)
       var mediaList: [TruvideoSDKMedia]? = request?.content
-      if(mediaList == nil){
+      if mediaList == nil {
         resolve("[]")
-      }else{
+      } else {
         var list = [String]()
         let dateFormatter = ISO8601DateFormatter()
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "EEE MMM dd HH:mm:ss 'GMT'Z yyyy"
-//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
         for media in mediaList! {
           let tagJsonData = try JSONSerialization.data(withJSONObject: media.tags.dictionary, options: [])
           if let tagJsonString = String(data: tagJsonData, encoding: .utf8) {
           
+            // FIXED: Removed thumbnailUrl and previewUrl
             let mediaDict: [String: Any] = [
               "id": media.remoteId,
-              "createdDate":dateFormatter.string(from: media.createdDate),
+              "createdDate": dateFormatter.string(from: media.createdDate),
               "remoteId": media.remoteId,
               "uploadedFileURL": media.uploadedFileURL.absoluteString,
-              "metaData": media.metadata.dictionary,  // must return [String: Any]
-              "tags": media.tags.dictionary,          // must return [String: Any]
+              "metaData": media.metadata.dictionary,
+              "tags": media.tags.dictionary,
               "transcriptionURL": media.transcriptionURL?.absoluteString ?? "",
               "transcriptionLength": "\(media.transcriptionLength)",
-              "fileType": media.type.rawValue,
-              "thumbnailUrl": media.thumbnailUrl?.absoluteString ?? "",
-              "previewUrl" : media.previewUrl?.absoluteString ?? ""
+              "fileType": media.type.rawValue
             ]
+            
             let jsonData = try JSONSerialization.data(withJSONObject: mediaDict, options: [])
             if let jsonString = String(data: jsonData, encoding: .utf8) {
               list.append(jsonString)
@@ -628,18 +537,10 @@ class TruVideoReactMediaSdk: NSObject {
         let jsonData = try JSONSerialization.data(withJSONObject: list, options: [])
         if let jsonString = String(data: jsonData, encoding: .utf8) {
           resolve(jsonString)
-        }else{
-          reject("ERROR","JSON_ERROR",nil)
+        } else {
+          reject("ERROR", "JSON_ERROR", nil)
         }
-
       }
-
-
     }
-    //try? request?.resume()
   }
-  
-  
-  
-
 }

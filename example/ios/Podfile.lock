@@ -1,12 +1,4 @@
 PODS:
-  - AWSCognitoIdentityProvider (2.41.0):
-    - AWSCognitoIdentityProviderASF (= 2.41.0)
-    - AWSCore (= 2.41.0)
-  - AWSCognitoIdentityProviderASF (2.41.0):
-    - AWSCore (= 2.41.0)
-  - AWSCore (2.41.0)
-  - AWSS3 (2.41.0):
-    - AWSCore (= 2.41.0)
   - boost (1.83.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.74.3)
@@ -1193,13 +1185,7 @@ PODS:
     - React-utils
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - truvideo-sdk-media (= 78.1.2)
     - Yoga
-  - truvideo-sdk-media (78.1.2):
-    - AWSCognitoIdentityProvider
-    - AWSCognitoIdentityProviderASF
-    - AWSCore
-    - AWSS3
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1263,12 +1249,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AWSCognitoIdentityProvider
-    - AWSCognitoIdentityProviderASF
-    - AWSCore
-    - AWSS3
     - SocketRocket
-    - truvideo-sdk-media
 
 EXTERNAL SOURCES:
   boost:
@@ -1384,10 +1365,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AWSCognitoIdentityProvider: b7e2471bec75137ce392b9a8c60f3cee465c61bd
-  AWSCognitoIdentityProviderASF: d26fedd80485c2f0f308741e02c4a9093921ad22
-  AWSCore: ee7594bda3132cde8666328bf9a09d8770c1c100
-  AWSS3: 50da7408a26c1c2886d02968807f2a0b6bf936ca
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
   FBLazyVector: 7e977dd099937dc5458851233141583abba49ff2
@@ -1442,8 +1419,7 @@ SPEC CHECKSUMS:
   React-utils: 595335727912553f56aad7f580254ce4ca95a09c
   ReactCommon: 57d127dbf2ca045a07604e13f51c8e97ba176e56
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
-  truvideo-react-media-sdk: 734360f881acd71449528ddc050f88f6a172edd4
-  truvideo-sdk-media: 792e9c4436e43af45e09fd392038a19aaa04f7a1
+  truvideo-react-media-sdk: 118883869552b04d3eb04e2b503fd4a5e80bab9f
   Yoga: 04f1db30bb810187397fa4c37dd1868a27af229c
 
 PODFILE CHECKSUM: e6b8b420a8a15e2c33308b742da543f2e9cadf0a
