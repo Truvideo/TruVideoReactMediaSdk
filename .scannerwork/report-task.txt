@@ -1,0 +1,6 @@
+projectKey=TruVideoMediaSdk
+serverUrl=http://localhost:9000
+serverVersion=25.11.0.114957
+dashboardUrl=http://localhost:9000/dashboard?id=TruVideoMediaSdk
+ceTaskId=a0e5c6ec-483a-46e9-86fb-ce49d15de0eb
+ceTaskUrl=http://localhost:9000/api/ce/task?id=a0e5c6ec-483a-46e9-86fb-ce49d15de0eb
