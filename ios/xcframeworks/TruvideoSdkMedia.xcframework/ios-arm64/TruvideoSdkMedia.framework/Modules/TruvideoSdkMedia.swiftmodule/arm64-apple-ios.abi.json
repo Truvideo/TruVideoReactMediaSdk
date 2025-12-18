@@ -100,6 +100,86 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "audio",
+            "printedName": "audio",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(TruvideoSdkMedia.TruvideoSdkMediaType.Type) -> TruvideoSdkMedia.TruvideoSdkMediaType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "TruvideoSdkMediaType",
+                    "printedName": "TruvideoSdkMedia.TruvideoSdkMediaType",
+                    "usr": "s:16TruvideoSdkMedia0abC4TypeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "TruvideoSdkMedia.TruvideoSdkMediaType.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "TruvideoSdkMediaType",
+                        "printedName": "TruvideoSdkMedia.TruvideoSdkMediaType",
+                        "usr": "s:16TruvideoSdkMedia0abC4TypeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:16TruvideoSdkMedia0abC4TypeO5audioyA2CmF",
+            "mangledName": "$s16TruvideoSdkMedia0abC4TypeO5audioyA2CmF",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "document",
+            "printedName": "document",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(TruvideoSdkMedia.TruvideoSdkMediaType.Type) -> TruvideoSdkMedia.TruvideoSdkMediaType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "TruvideoSdkMediaType",
+                    "printedName": "TruvideoSdkMedia.TruvideoSdkMediaType",
+                    "usr": "s:16TruvideoSdkMedia0abC4TypeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "TruvideoSdkMedia.TruvideoSdkMediaType.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "TruvideoSdkMediaType",
+                        "printedName": "TruvideoSdkMedia.TruvideoSdkMediaType",
+                        "usr": "s:16TruvideoSdkMedia0abC4TypeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:16TruvideoSdkMedia0abC4TypeO8documentyA2CmF",
+            "mangledName": "$s16TruvideoSdkMedia0abC4TypeO8documentyA2CmF",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
             "kind": "Constructor",
             "name": "init",
             "printedName": "init(rawValue:)",
@@ -334,7 +414,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -367,7 +448,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           }
@@ -585,7 +667,8 @@
             "declAttributes": [
               "Final",
               "HasStorage",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "isLet": true,
             "hasStorage": true,
@@ -668,7 +751,8 @@
             "static": true,
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -732,8 +816,7 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl",
-              "RawDocComment"
+              "AccessControl"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -881,7 +964,7 @@
           {
             "kind": "Function",
             "name": "FileUploadRequestBuilder",
-            "printedName": "FileUploadRequestBuilder(fileURL:metadata:tags:)",
+            "printedName": "FileUploadRequestBuilder(fileURL:metadata:tags:includeInReport:isLibrary:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -906,11 +989,39 @@
                 "name": "TruvideoSdkMediaTags",
                 "printedName": "TruvideoSdkMedia.TruvideoSdkMediaTags",
                 "usr": "s:16TruvideoSdkMedia0abC4TagsC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Bool?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Bool?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia0abC9InterfaceP24FileUploadRequestBuilder7fileURL8metadata4tagsAaDC10Foundation0J0V_AA0abC8MetadataCAA0abC4TagsCtF",
-            "mangledName": "$s16TruvideoSdkMedia0abC9InterfaceP24FileUploadRequestBuilder7fileURL8metadata4tagsAaDC10Foundation0J0V_AA0abC8MetadataCAA0abC4TagsCtF",
+            "usr": "s:16TruvideoSdkMedia0abC9InterfaceP24FileUploadRequestBuilder7fileURL8metadata4tags15includeInReport9isLibraryAaDC10Foundation0J0V_AA0abC8MetadataCAA0abC4TagsCSbSgARtF",
+            "mangledName": "$s16TruvideoSdkMedia0abC9InterfaceP24FileUploadRequestBuilder7fileURL8metadata4tags15includeInReport9isLibraryAaDC10Foundation0J0V_AA0abC8MetadataCAA0abC4TagsCSbSgARtF",
             "moduleName": "TruvideoSdkMedia",
             "genericSig": "<τ_0_0 where τ_0_0 : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
             "sugared_genericSig": "<Self where Self : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
@@ -1044,7 +1155,7 @@
           {
             "kind": "Function",
             "name": "search",
-            "printedName": "search(type:tags:pageNumber:size:)",
+            "printedName": "search(type:tags:isLibrary:pageNumber:size:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -1090,6 +1201,12 @@
               },
               {
                 "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
                 "name": "Int",
                 "printedName": "Swift.Int",
                 "usr": "s:Si"
@@ -1102,8 +1219,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia0abC9InterfaceP6search4type4tags10pageNumber4sizeAA0abC17PaginatedResponseVyAA0A8SDKMediaVGAA0abC4TypeOSg_AA0abC4TagsCSgS2itYaKF",
-            "mangledName": "$s16TruvideoSdkMedia0abC9InterfaceP6search4type4tags10pageNumber4sizeAA0abC17PaginatedResponseVyAA0A8SDKMediaVGAA0abC4TypeOSg_AA0abC4TagsCSgS2itYaKF",
+            "usr": "s:16TruvideoSdkMedia0abC9InterfaceP6search4type4tags9isLibrary10pageNumber4sizeAA0abC17PaginatedResponseVyAA0A8SDKMediaVGAA0abC4TypeOSg_AA0abC4TagsCSgSbS2itYaKF",
+            "mangledName": "$s16TruvideoSdkMedia0abC9InterfaceP6search4type4tags9isLibrary10pageNumber4sizeAA0abC17PaginatedResponseVyAA0A8SDKMediaVGAA0abC4TypeOSg_AA0abC4TagsCSgSbS2itYaKF",
             "moduleName": "TruvideoSdkMedia",
             "genericSig": "<τ_0_0 where τ_0_0 : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
             "sugared_genericSig": "<Self where Self : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
@@ -1225,7 +1342,7 @@
           {
             "kind": "Function",
             "name": "FileUploadRequestBuilder",
-            "printedName": "FileUploadRequestBuilder(fileURL:metadata:tags:)",
+            "printedName": "FileUploadRequestBuilder(fileURL:metadata:tags:includeInReport:isLibrary:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -1252,14 +1369,47 @@
                 "printedName": "TruvideoSdkMedia.TruvideoSdkMediaTags",
                 "hasDefaultArg": true,
                 "usr": "s:16TruvideoSdkMedia0abC4TagsC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Bool?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Bool?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia0abC9InterfacePAAE24FileUploadRequestBuilder7fileURL8metadata4tagsAaDC10Foundation0J0V_AA0abC8MetadataCAA0abC4TagsCtF",
-            "mangledName": "$s16TruvideoSdkMedia0abC9InterfacePAAE24FileUploadRequestBuilder7fileURL8metadata4tagsAaDC10Foundation0J0V_AA0abC8MetadataCAA0abC4TagsCtF",
+            "usr": "s:16TruvideoSdkMedia0abC9InterfacePAAE24FileUploadRequestBuilder7fileURL8metadata4tags15includeInReport9isLibraryAaDC10Foundation0J0V_AA0abC8MetadataCAA0abC4TagsCSbSgARtF",
+            "mangledName": "$s16TruvideoSdkMedia0abC9InterfacePAAE24FileUploadRequestBuilder7fileURL8metadata4tags15includeInReport9isLibraryAaDC10Foundation0J0V_AA0abC8MetadataCAA0abC4TagsCSbSgARtF",
             "moduleName": "TruvideoSdkMedia",
             "genericSig": "<τ_0_0 where τ_0_0 : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
             "sugared_genericSig": "<Self where Self : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
+            "declAttributes": [
+              "RawDocComment"
+            ],
             "isFromExtension": true,
             "funcSelfKind": "NonMutating"
           },
@@ -1304,6 +1454,9 @@
             "moduleName": "TruvideoSdkMedia",
             "genericSig": "<τ_0_0 where τ_0_0 : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
             "sugared_genericSig": "<Self where Self : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
+            "declAttributes": [
+              "RawDocComment"
+            ],
             "isFromExtension": true,
             "throwing": true,
             "funcSelfKind": "NonMutating"
@@ -1363,13 +1516,16 @@
             "moduleName": "TruvideoSdkMedia",
             "genericSig": "<τ_0_0 where τ_0_0 : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
             "sugared_genericSig": "<Self where Self : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
+            "declAttributes": [
+              "RawDocComment"
+            ],
             "isFromExtension": true,
             "funcSelfKind": "NonMutating"
           },
           {
             "kind": "Function",
             "name": "search",
-            "printedName": "search(type:tags:pageNumber:size:)",
+            "printedName": "search(type:tags:isLibrary:pageNumber:size:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -1417,6 +1573,13 @@
               },
               {
                 "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
                 "name": "Int",
                 "printedName": "Swift.Int",
                 "hasDefaultArg": true,
@@ -1431,11 +1594,14 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia0abC9InterfacePAAE6search4type4tags10pageNumber4sizeAA0abC17PaginatedResponseVyAA0A8SDKMediaVGAA0abC4TypeOSg_AA0abC4TagsCSgS2itYaKF",
-            "mangledName": "$s16TruvideoSdkMedia0abC9InterfacePAAE6search4type4tags10pageNumber4sizeAA0abC17PaginatedResponseVyAA0A8SDKMediaVGAA0abC4TypeOSg_AA0abC4TagsCSgS2itYaKF",
+            "usr": "s:16TruvideoSdkMedia0abC9InterfacePAAE6search4type4tags9isLibrary10pageNumber4sizeAA0abC17PaginatedResponseVyAA0A8SDKMediaVGAA0abC4TypeOSg_AA0abC4TagsCSgSbS2itYaKF",
+            "mangledName": "$s16TruvideoSdkMedia0abC9InterfacePAAE6search4type4tags9isLibrary10pageNumber4sizeAA0abC17PaginatedResponseVyAA0A8SDKMediaVGAA0abC4TypeOSg_AA0abC4TagsCSgSbS2itYaKF",
             "moduleName": "TruvideoSdkMedia",
             "genericSig": "<τ_0_0 where τ_0_0 : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
             "sugared_genericSig": "<Self where Self : TruvideoSdkMedia.TruvideoSdkMediaInterface>",
+            "declAttributes": [
+              "RawDocComment"
+            ],
             "isFromExtension": true,
             "throwing": true,
             "funcSelfKind": "NonMutating"
@@ -2298,7 +2464,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "accessors": [
               {
@@ -2370,7 +2537,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "accessors": [
               {
@@ -2409,41 +2577,6 @@
                 "accessorKind": "get"
               }
             ]
-          },
-          {
-            "kind": "Function",
-            "name": "==",
-            "printedName": "==(_:_:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Bool",
-                "printedName": "Swift.Bool",
-                "usr": "s:Sb"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "TruvideoSdkMediaUploadRequest",
-                "printedName": "TruvideoSdkMedia.TruvideoSdkMediaUploadRequest",
-                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "TruvideoSdkMediaUploadRequest",
-                "printedName": "TruvideoSdkMedia.TruvideoSdkMediaUploadRequest",
-                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC2eeoiySbAC_ACtFZ",
-            "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC2eeoiySbAC_ACtFZ",
-            "moduleName": "TruvideoSdkMedia",
-            "static": true,
-            "declAttributes": [
-              "Final",
-              "AccessControl"
-            ],
-            "funcSelfKind": "NonMutating"
           },
           {
             "kind": "TypeDecl",
@@ -3234,8 +3367,8 @@
           },
           {
             "kind": "Var",
-            "name": "transcriptionLenght",
-            "printedName": "transcriptionLenght",
+            "name": "transcriptionLength",
+            "printedName": "transcriptionLength",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -3253,8 +3386,8 @@
               }
             ],
             "declKind": "Var",
-            "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLenghtSfSgvp",
-            "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLenghtSfSgvp",
+            "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLengthSfSgvp",
+            "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLengthSfSgvp",
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "HasInitialValue",
@@ -3286,8 +3419,8 @@
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLenghtSfSgvg",
-                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLenghtSfSgvg",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLengthSfSgvg",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLengthSfSgvg",
                 "moduleName": "TruvideoSdkMedia",
                 "implicit": true,
                 "declAttributes": [
@@ -3321,8 +3454,8 @@
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLenghtSfSgvs",
-                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLenghtSfSgvs",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLengthSfSgvs",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLengthSfSgvs",
                 "moduleName": "TruvideoSdkMedia",
                 "implicit": true,
                 "declAttributes": [
@@ -3342,8 +3475,8 @@
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLenghtSfSgvM",
-                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLenghtSfSgvM",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLengthSfSgvM",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC19transcriptionLengthSfSgvM",
                 "moduleName": "TruvideoSdkMedia",
                 "implicit": true,
                 "declAttributes": [
@@ -3631,6 +3764,354 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "includeInReport",
+            "printedName": "includeInReport",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Bool?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC15includeInReportSbSgvp",
+            "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC15includeInReportSbSgvp",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Bool?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Bool",
+                        "printedName": "Swift.Bool",
+                        "usr": "s:Sb"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC15includeInReportSbSgvg",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC15includeInReportSbSgvg",
+                "moduleName": "TruvideoSdkMedia",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Bool?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Bool",
+                        "printedName": "Swift.Bool",
+                        "usr": "s:Sb"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC15includeInReportSbSgvs",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC15includeInReportSbSgvs",
+                "moduleName": "TruvideoSdkMedia",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC15includeInReportSbSgvM",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC15includeInReportSbSgvM",
+                "moduleName": "TruvideoSdkMedia",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "fileType",
+            "printedName": "fileType",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "TruvideoSdkMediaType",
+                "printedName": "TruvideoSdkMedia.TruvideoSdkMediaType",
+                "usr": "s:16TruvideoSdkMedia0abC4TypeO"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC8fileTypeAA0abcG0Ovp",
+            "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC8fileTypeAA0abcG0Ovp",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "TruvideoSdkMediaType",
+                    "printedName": "TruvideoSdkMedia.TruvideoSdkMediaType",
+                    "usr": "s:16TruvideoSdkMedia0abC4TypeO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC8fileTypeAA0abcG0Ovg",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC8fileTypeAA0abcG0Ovg",
+                "moduleName": "TruvideoSdkMedia",
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "durationMilliseconds",
+            "printedName": "durationMilliseconds",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Int?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC20durationMillisecondsSiSgvp",
+            "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC20durationMillisecondsSiSgvp",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Int?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC20durationMillisecondsSiSgvg",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC20durationMillisecondsSiSgvg",
+                "moduleName": "TruvideoSdkMedia",
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isLibrary",
+            "printedName": "isLibrary",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Bool?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC9isLibrarySbSgvp",
+            "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC9isLibrarySbSgvp",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Bool?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Bool",
+                        "printedName": "Swift.Bool",
+                        "usr": "s:Sb"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC9isLibrarySbSgvg",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC9isLibrarySbSgvg",
+                "moduleName": "TruvideoSdkMedia",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Bool?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Bool",
+                        "printedName": "Swift.Bool",
+                        "usr": "s:Sb"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC9isLibrarySbSgvs",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC9isLibrarySbSgvs",
+                "moduleName": "TruvideoSdkMedia",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC9isLibrarySbSgvM",
+                "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC9isLibrarySbSgvM",
+                "moduleName": "TruvideoSdkMedia",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
             "kind": "Function",
             "name": "upload",
             "printedName": "upload()",
@@ -3647,7 +4128,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "throwing": true,
             "funcSelfKind": "NonMutating"
@@ -3669,7 +4151,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "throwing": true,
             "funcSelfKind": "NonMutating"
@@ -3691,7 +4174,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "throwing": true,
             "funcSelfKind": "NonMutating"
@@ -3713,7 +4197,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "throwing": true,
             "funcSelfKind": "NonMutating"
@@ -3735,7 +4220,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "throwing": true,
             "funcSelfKind": "NonMutating"
@@ -3757,9 +4243,102 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "updateIncludeInReport",
+            "printedName": "updateIncludeInReport(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC21updateIncludeInReportyySbF",
+            "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC21updateIncludeInReportyySbF",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "updateIsLibrary",
+            "printedName": "updateIsLibrary(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC15updateIsLibraryyySbF",
+            "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC15updateIsLibraryyySbF",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "==",
+            "printedName": "==(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "TruvideoSdkMediaUploadRequest",
+                "printedName": "TruvideoSdkMedia.TruvideoSdkMediaUploadRequest",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "TruvideoSdkMediaUploadRequest",
+                "printedName": "TruvideoSdkMedia.TruvideoSdkMediaUploadRequest",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC2eeoiySbAC_ACtFZ",
+            "mangledName": "$s16TruvideoSdkMedia0abC13UploadRequestC2eeoiySbAC_ACtFZ",
+            "moduleName": "TruvideoSdkMedia",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
             "funcSelfKind": "NonMutating"
           }
         ],
@@ -3769,7 +4348,8 @@
         "moduleName": "TruvideoSdkMedia",
         "declAttributes": [
           "Final",
-          "AccessControl"
+          "AccessControl",
+          "RawDocComment"
         ],
         "hasMissingDesignatedInitializers": true,
         "conformances": [
@@ -3837,7 +4417,10 @@
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
-        "moduleName": "TruvideoSdkMedia"
+        "moduleName": "TruvideoSdkMedia",
+        "declAttributes": [
+          "RawDocComment"
+        ]
       },
       {
         "kind": "Import",
@@ -3857,16 +4440,6 @@
         "moduleName": "TruvideoSdkMedia",
         "declAttributes": [
           "ImplementationOnly"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "TruvideoSdkMedia",
-        "declAttributes": [
-          "RawDocComment"
         ]
       },
       {
@@ -3996,6 +4569,67 @@
           },
           {
             "kind": "Var",
+            "name": "previewUrl",
+            "printedName": "previewUrl",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Foundation.URL?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "URL",
+                    "printedName": "Foundation.URL",
+                    "usr": "s:10Foundation3URLV"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16TruvideoSdkMedia0A8SDKMediaV10previewUrl10Foundation3URLVSgvp",
+            "mangledName": "$s16TruvideoSdkMedia0A8SDKMediaV10previewUrl10Foundation3URLVSgvp",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Foundation.URL?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "URL",
+                        "printedName": "Foundation.URL",
+                        "usr": "s:10Foundation3URLV"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0A8SDKMediaV10previewUrl10Foundation3URLVSgvg",
+                "mangledName": "$s16TruvideoSdkMedia0A8SDKMediaV10previewUrl10Foundation3URLVSgvg",
+                "moduleName": "TruvideoSdkMedia",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "remoteId",
             "printedName": "remoteId",
             "children": [
@@ -4078,6 +4712,67 @@
                 "declKind": "Accessor",
                 "usr": "s:16TruvideoSdkMedia0A8SDKMediaV4tagsAA0abC4TagsCvg",
                 "mangledName": "$s16TruvideoSdkMedia0A8SDKMediaV4tagsAA0abC4TagsCvg",
+                "moduleName": "TruvideoSdkMedia",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "thumbnailUrl",
+            "printedName": "thumbnailUrl",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Foundation.URL?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "URL",
+                    "printedName": "Foundation.URL",
+                    "usr": "s:10Foundation3URLV"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16TruvideoSdkMedia0A8SDKMediaV12thumbnailUrl10Foundation3URLVSgvp",
+            "mangledName": "$s16TruvideoSdkMedia0A8SDKMediaV12thumbnailUrl10Foundation3URLVSgvp",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Foundation.URL?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "URL",
+                        "printedName": "Foundation.URL",
+                        "usr": "s:10Foundation3URLV"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0A8SDKMediaV12thumbnailUrl10Foundation3URLVSgvg",
+                "mangledName": "$s16TruvideoSdkMedia0A8SDKMediaV12thumbnailUrl10Foundation3URLVSgvg",
                 "moduleName": "TruvideoSdkMedia",
                 "implicit": true,
                 "accessorKind": "get"
@@ -4281,6 +4976,96 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "includeInReport",
+            "printedName": "includeInReport",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16TruvideoSdkMedia0A8SDKMediaV15includeInReportSbvp",
+            "mangledName": "$s16TruvideoSdkMedia0A8SDKMediaV15includeInReportSbvp",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0A8SDKMediaV15includeInReportSbvg",
+                "mangledName": "$s16TruvideoSdkMedia0A8SDKMediaV15includeInReportSbvg",
+                "moduleName": "TruvideoSdkMedia",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isLibrary",
+            "printedName": "isLibrary",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16TruvideoSdkMedia0A8SDKMediaV9isLibrarySbvp",
+            "mangledName": "$s16TruvideoSdkMedia0A8SDKMediaV9isLibrarySbvp",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16TruvideoSdkMedia0A8SDKMediaV9isLibrarySbvg",
+                "mangledName": "$s16TruvideoSdkMedia0A8SDKMediaV9isLibrarySbvg",
+                "moduleName": "TruvideoSdkMedia",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
             "kind": "Function",
             "name": "==",
             "printedName": "==(_:_:)",
@@ -4358,6 +5143,17 @@
         "declKind": "Import",
         "moduleName": "TruvideoSdkMedia",
         "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "shared",
+        "printedName": "shared",
+        "declKind": "Import",
+        "moduleName": "TruvideoSdkMedia",
+        "declAttributes": [
+          "ImplementationOnly",
           "RawDocComment"
         ]
       },
@@ -4972,12 +5768,9 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "HasStorage",
               "AccessControl",
               "RawDocComment"
             ],
-            "isLet": true,
-            "hasStorage": true,
             "accessors": [
               {
                 "kind": "Accessor",
@@ -5008,7 +5801,6 @@
                 "usr": "s:16TruvideoSdkMedia0abC8MetadataC10dictionarySDySSypGvg",
                 "mangledName": "$s16TruvideoSdkMedia0abC8MetadataC10dictionarySDySSypGvg",
                 "moduleName": "TruvideoSdkMedia",
-                "implicit": true,
                 "declAttributes": [
                   "Final"
                 ],
@@ -5055,7 +5847,8 @@
             "static": true,
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -5090,7 +5883,8 @@
             "static": true,
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           }
@@ -5151,7 +5945,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "accessors": [
               {
@@ -5242,7 +6037,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -5283,7 +6079,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -5316,7 +6113,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -5338,7 +6136,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           }
@@ -5358,6 +6157,16 @@
         "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "TruvideoSdkMedia",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "AVFoundation",
+        "printedName": "AVFoundation",
         "declKind": "Import",
         "moduleName": "TruvideoSdkMedia",
         "declAttributes": [
@@ -5535,136 +6344,6 @@
         "children": [
           {
             "kind": "Function",
-            "name": "build",
-            "printedName": "build()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "TruvideoSdkMediaUploadRequest",
-                "printedName": "TruvideoSdkMedia.TruvideoSdkMediaUploadRequest",
-                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC5buildAA0abceF0CyF",
-            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC5buildAA0abceF0CyF",
-            "moduleName": "TruvideoSdkMedia",
-            "declAttributes": [
-              "Final",
-              "AccessControl"
-            ],
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "addTag",
-            "printedName": "addTag(_:_:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC6addTagyySS_SStF",
-            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC6addTagyySS_SStF",
-            "moduleName": "TruvideoSdkMedia",
-            "declAttributes": [
-              "Final",
-              "AccessControl"
-            ],
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "removeTag",
-            "printedName": "removeTag(_:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC9removeTagyySSF",
-            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC9removeTagyySSF",
-            "moduleName": "TruvideoSdkMedia",
-            "declAttributes": [
-              "Final",
-              "AccessControl"
-            ],
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "clearTags",
-            "printedName": "clearTags()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC9clearTagsyyF",
-            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC9clearTagsyyF",
-            "moduleName": "TruvideoSdkMedia",
-            "declAttributes": [
-              "Final",
-              "AccessControl"
-            ],
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "setTags",
-            "printedName": "setTags(_:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "TruvideoSdkMediaTags",
-                "printedName": "TruvideoSdkMedia.TruvideoSdkMediaTags",
-                "usr": "s:16TruvideoSdkMedia0abC4TagsC"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC7setTagsyyAA0abcI0CF",
-            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC7setTagsyyAA0abcI0CF",
-            "moduleName": "TruvideoSdkMedia",
-            "declAttributes": [
-              "Final",
-              "AccessControl"
-            ],
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
             "name": "addMetadata",
             "printedName": "addMetadata(_:_:)",
             "children": [
@@ -5692,7 +6371,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -5733,7 +6413,8 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -5766,7 +6447,110 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "addTag",
+            "printedName": "addTag(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC6addTagyySS_SStF",
+            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC6addTagyySS_SStF",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "build",
+            "printedName": "build()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "TruvideoSdkMediaUploadRequest",
+                "printedName": "TruvideoSdkMedia.TruvideoSdkMediaUploadRequest",
+                "usr": "s:16TruvideoSdkMedia0abC13UploadRequestC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC5buildAA0abceF0CyKF",
+            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC5buildAA0abceF0CyKF",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "clearMetadata",
+            "printedName": "clearMetadata()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC13clearMetadatayyF",
+            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC13clearMetadatayyF",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "clearTags",
+            "printedName": "clearTags()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC9clearTagsyyF",
+            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC9clearTagsyyF",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -5793,28 +6577,36 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
           {
             "kind": "Function",
-            "name": "clearMetadata",
-            "printedName": "clearMetadata()",
+            "name": "removeTag",
+            "printedName": "removeTag(_:)",
             "children": [
               {
                 "kind": "TypeNominal",
                 "name": "Void",
                 "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
               }
             ],
             "declKind": "Func",
-            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC13clearMetadatayyF",
-            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC13clearMetadatayyF",
+            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC9removeTagyySSF",
+            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC9removeTagyySSF",
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           },
@@ -5841,7 +6633,36 @@
             "moduleName": "TruvideoSdkMedia",
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "setTags",
+            "printedName": "setTags(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "TruvideoSdkMediaTags",
+                "printedName": "TruvideoSdkMedia.TruvideoSdkMediaTags",
+                "usr": "s:16TruvideoSdkMedia0abC4TagsC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16TruvideoSdkMedia24FileUploadRequestBuilderC7setTagsyyAA0abcI0CF",
+            "mangledName": "$s16TruvideoSdkMedia24FileUploadRequestBuilderC7setTagsyyAA0abcI0CF",
+            "moduleName": "TruvideoSdkMedia",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           }
@@ -5852,7 +6673,8 @@
         "moduleName": "TruvideoSdkMedia",
         "declAttributes": [
           "Final",
-          "AccessControl"
+          "AccessControl",
+          "RawDocComment"
         ],
         "hasMissingDesignatedInitializers": true
       },
@@ -5940,609 +6762,672 @@
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/DataType\/TruvideoSdkMediaType.swift",
       "kind": "StringLiteral",
-      "offset": 245,
+      "offset": 281,
       "length": 7,
       "value": "\"IMAGE\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/DataType\/TruvideoSdkMediaType.swift",
       "kind": "StringLiteral",
-      "offset": 314,
+      "offset": 350,
       "length": 7,
       "value": "\"VIDEO\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/DataType\/TruvideoSdkMediaType.swift",
       "kind": "StringLiteral",
-      "offset": 245,
+      "offset": 420,
+      "length": 7,
+      "value": "\"AUDIO\""
+    },
+    {
+      "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/DataType\/TruvideoSdkMediaType.swift",
+      "kind": "StringLiteral",
+      "offset": 490,
+      "length": 10,
+      "value": "\"DOCUMENT\""
+    },
+    {
+      "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/DataType\/TruvideoSdkMediaType.swift",
+      "kind": "StringLiteral",
+      "offset": 281,
       "length": 7,
       "value": "\"IMAGE\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/DataType\/TruvideoSdkMediaType.swift",
       "kind": "StringLiteral",
-      "offset": 314,
+      "offset": 350,
       "length": 7,
       "value": "\"VIDEO\""
+    },
+    {
+      "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/DataType\/TruvideoSdkMediaType.swift",
+      "kind": "StringLiteral",
+      "offset": 420,
+      "length": 7,
+      "value": "\"AUDIO\""
+    },
+    {
+      "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/DataType\/TruvideoSdkMediaType.swift",
+      "kind": "StringLiteral",
+      "offset": 490,
+      "length": 10,
+      "value": "\"DOCUMENT\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Uploads\/S3Uploader\/AWSS3UploadData.swift",
       "kind": "Dictionary",
-      "offset": 648,
+      "offset": 2319,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Uploads\/S3Uploader\/AWSS3UploadData.swift",
       "kind": "Dictionary",
-      "offset": 678,
+      "offset": 2357,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Network\/Request\/Request.swift",
       "kind": "Array",
-      "offset": 346,
+      "offset": 922,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Tags\/TruvideoSdkMediaTags.swift",
       "kind": "Dictionary",
-      "offset": 380,
+      "offset": 1351,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/TruvideoSdkMedia.swift",
+      "kind": "BooleanLiteral",
+      "offset": 7003,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/TruvideoSdkMedia.swift",
       "kind": "IntegerLiteral",
-      "offset": 4932,
+      "offset": 7036,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/TruvideoSdkMedia.swift",
       "kind": "IntegerLiteral",
-      "offset": 4955,
+      "offset": 7059,
       "length": 2,
       "value": "20"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Gateway\/Media\/MediaGatewayImplementation.swift",
       "kind": "IntegerLiteral",
-      "offset": 414,
+      "offset": 467,
       "length": 3,
       "value": "100"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1069,
+      "offset": 1287,
       "length": 10,
       "value": "1"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1093,
+      "offset": 1311,
       "length": 13,
       "value": "2"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1120,
+      "offset": 1338,
       "length": 9,
       "value": "3"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1143,
+      "offset": 1361,
       "length": 5,
       "value": "4"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1162,
+      "offset": 1380,
       "length": 9,
       "value": "5"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1185,
+      "offset": 1403,
       "length": 6,
       "value": "6"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1069,
+      "offset": 1287,
       "length": 10,
       "value": "1"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1093,
+      "offset": 1311,
       "length": 13,
       "value": "2"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1120,
+      "offset": 1338,
       "length": 9,
       "value": "3"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1143,
+      "offset": 1361,
       "length": 5,
       "value": "4"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1162,
+      "offset": 1380,
       "length": 9,
       "value": "5"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1185,
+      "offset": 1403,
       "length": 6,
       "value": "6"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1069,
+      "offset": 1287,
       "length": 10,
       "value": "1"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1093,
+      "offset": 1311,
       "length": 13,
       "value": "2"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1120,
+      "offset": 1338,
       "length": 9,
       "value": "3"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1143,
+      "offset": 1361,
       "length": 5,
       "value": "4"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1162,
+      "offset": 1380,
       "length": 9,
       "value": "5"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 1185,
+      "offset": 1403,
       "length": 6,
       "value": "6"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "Dictionary",
-      "offset": 2304,
+      "offset": 4119,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "Dictionary",
-      "offset": 2365,
+      "offset": 4180,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/RequestBuilder\/TruvideoSdkMediaUploadRequest.swift",
       "kind": "IntegerLiteral",
-      "offset": 2450,
+      "offset": 4265,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 86,
+      "offset": 180,
       "length": 36,
       "value": "\"TruvideoFileUploaderImplementation\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 165,
+      "offset": 259,
       "length": 32,
       "value": "\"FileURLValidatorImplementation\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 231,
+      "offset": 325,
       "length": 23,
       "value": "\"AWSS3FileUploaderTask\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 295,
+      "offset": 389,
       "length": 30,
       "value": "\"TruvideoSdkMediaInterfaceImp\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 364,
+      "offset": 458,
       "length": 28,
       "value": "\"MediaGatewayImplementation\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 440,
+      "offset": 534,
       "length": 18,
       "value": "\"event_media_init\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 499,
+      "offset": 593,
       "length": 46,
       "value": "\"event_media_file_upload_request_build_create\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 584,
+      "offset": 678,
       "length": 44,
       "value": "\"event_media_file_upload_request_stream_all\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 665,
+      "offset": 759,
       "length": 43,
       "value": "\"event_media_file_upload_request_get_by_id\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 748,
+      "offset": 842,
       "length": 46,
       "value": "\"event_media_file_upload_request_stream_by_id\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 830,
+      "offset": 924,
       "length": 41,
       "value": "\"event_media_file_upload_request_get_all\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 896,
+      "offset": 990,
       "length": 27,
       "value": "\"event_media_auth_validate\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 958,
+      "offset": 1052,
       "length": 39,
       "value": "\"event_media_file_upload_request_start\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1033,
+      "offset": 1127,
       "length": 40,
       "value": "\"event_media_file_upload_request_cancel\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1109,
+      "offset": 1203,
       "length": 40,
       "value": "\"event_media_file_upload_request_delete\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1184,
+      "offset": 1278,
       "length": 39,
       "value": "\"event_media_file_upload_request_pause\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1259,
+      "offset": 1353,
       "length": 40,
       "value": "\"event_media_file_upload_request_resume\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1335,
+      "offset": 1429,
       "length": 40,
       "value": "\"event_media_file_upload_request_insert\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1411,
+      "offset": 1505,
       "length": 40,
       "value": "\"event_media_file_upload_request_update\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1475,
+      "offset": 1569,
       "length": 26,
       "value": "\"event_media_media_create\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 86,
+      "offset": 180,
       "length": 36,
       "value": "\"TruvideoFileUploaderImplementation\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 165,
+      "offset": 259,
       "length": 32,
       "value": "\"FileURLValidatorImplementation\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 231,
+      "offset": 325,
       "length": 23,
       "value": "\"AWSS3FileUploaderTask\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 295,
+      "offset": 389,
       "length": 30,
       "value": "\"TruvideoSdkMediaInterfaceImp\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 364,
+      "offset": 458,
       "length": 28,
       "value": "\"MediaGatewayImplementation\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 440,
+      "offset": 534,
       "length": 18,
       "value": "\"event_media_init\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 499,
+      "offset": 593,
       "length": 46,
       "value": "\"event_media_file_upload_request_build_create\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 584,
+      "offset": 678,
       "length": 44,
       "value": "\"event_media_file_upload_request_stream_all\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 665,
+      "offset": 759,
       "length": 43,
       "value": "\"event_media_file_upload_request_get_by_id\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 748,
+      "offset": 842,
       "length": 46,
       "value": "\"event_media_file_upload_request_stream_by_id\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 830,
+      "offset": 924,
       "length": 41,
       "value": "\"event_media_file_upload_request_get_all\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 896,
+      "offset": 990,
       "length": 27,
       "value": "\"event_media_auth_validate\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 958,
+      "offset": 1052,
       "length": 39,
       "value": "\"event_media_file_upload_request_start\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1033,
+      "offset": 1127,
       "length": 40,
       "value": "\"event_media_file_upload_request_cancel\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1109,
+      "offset": 1203,
       "length": 40,
       "value": "\"event_media_file_upload_request_delete\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1184,
+      "offset": 1278,
       "length": 39,
       "value": "\"event_media_file_upload_request_pause\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1259,
+      "offset": 1353,
       "length": 40,
       "value": "\"event_media_file_upload_request_resume\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1335,
+      "offset": 1429,
       "length": 40,
       "value": "\"event_media_file_upload_request_insert\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1411,
+      "offset": 1505,
       "length": 40,
       "value": "\"event_media_file_upload_request_update\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/Events.swift",
       "kind": "StringLiteral",
-      "offset": 1475,
+      "offset": 1569,
       "length": 26,
       "value": "\"event_media_media_create\""
-    },
-    {
-      "filePath": "\/Users\/vagrant\/git\/CI.swift",
-      "kind": "StringLiteral",
-      "offset": 151,
-      "length": 6,
-      "value": "\"BETA\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Logger\/TruvideoSdkMediaLogger.swift",
       "kind": "StringLiteral",
-      "offset": 338,
+      "offset": 539,
       "length": 8,
       "value": "\"0.0.01\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/Extensions\/String+Extension.swift",
       "kind": "StringLiteral",
-      "offset": 209,
+      "offset": 245,
       "length": 13,
       "value": "\"en_US_POSIX\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/Extensions\/String+Extension.swift",
       "kind": "StringLiteral",
-      "offset": 274,
+      "offset": 310,
       "length": 5,
       "value": "\"UTC\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Core\/Extensions\/String+Extension.swift",
       "kind": "StringLiteral",
-      "offset": 1028,
+      "offset": 1064,
       "length": 24,
       "value": "\"yyyy-MM-dd'T'HH:mm:ssZ\""
     },
     {
+      "filePath": "\/Users\/vagrant\/git\/CI.swift",
+      "kind": "StringLiteral",
+      "offset": 1426,
+      "length": 6,
+      "value": "\"BETA\""
+    },
+    {
+      "filePath": "\/Users\/vagrant\/git\/CI.swift",
+      "kind": "StringLiteral",
+      "offset": 1517,
+      "length": 5,
+      "value": "\"DEV\""
+    },
+    {
+      "filePath": "\/Users\/vagrant\/git\/CI.swift",
+      "kind": "StringLiteral",
+      "offset": 1609,
+      "length": 6,
+      "value": "\"PROD\""
+    },
+    {
+      "filePath": "\/Users\/vagrant\/git\/CI.swift",
+      "kind": "StringLiteral",
+      "offset": 1735,
+      "length": 4,
+      "value": "\"RC\""
+    },
+    {
+      "filePath": "\/Users\/vagrant\/git\/CI.swift",
+      "kind": "StringLiteral",
+      "offset": 1866,
+      "length": 6,
+      "value": "\"PROD\""
+    },
+    {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Store\/UploadsStore.swift",
       "kind": "Dictionary",
-      "offset": 4183,
+      "offset": 5123,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Store\/UploadsStore.swift",
       "kind": "Dictionary",
-      "offset": 4275,
+      "offset": 5216,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Uploads\/S3Uploader\/AWSS3FileUploaderTask.swift",
       "kind": "BooleanLiteral",
-      "offset": 713,
+      "offset": 760,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Metadata\/TruvideoSdkMediaMetadata.swift",
       "kind": "Dictionary",
-      "offset": 322,
+      "offset": 1406,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Network\/SharedHTTPClient.swift",
       "kind": "Dictionary",
-      "offset": 1951,
+      "offset": 1933,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/TruvideoSdkMediaInterfaceImp.swift",
-      "kind": "StringLiteral",
-      "offset": 444,
-      "length": 22,
-      "value": "\"uploads-store.sqlite\""
+      "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Gateway\/Media\/Parameters\/Search\/SearchMediaParameters.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1242,
+      "length": 5,
+      "value": "false"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Store\/CoreDataUploadStore.swift",
       "kind": "StringLiteral",
-      "offset": 228,
+      "offset": 339,
       "length": 14,
       "value": "\"UploadsStore\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Network\/HTTPClient.swift",
       "kind": "Dictionary",
-      "offset": 2167,
+      "offset": 2203,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Network\/HTTPClient.swift",
       "kind": "Dictionary",
-      "offset": 2208,
+      "offset": 2244,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/TruvideoSdkMedia\/Network\/HTTPClient.swift",
       "kind": "Dictionary",
-      "offset": 2964,
+      "offset": 3000,
       "length": 3,
       "value": "[]"
     }
