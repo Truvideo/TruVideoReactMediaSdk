@@ -325,7 +325,7 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
         }
     }
 
-    @objc(getAllFileRequests:withResolver:withRejecter:)
+    @objc(getAllFileUploadRequests:withResolver:withRejecter:)
     public func getAllFileRequests(status: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         do {
             var statusData: TruvideoSdkMediaUploadRequest.Status?

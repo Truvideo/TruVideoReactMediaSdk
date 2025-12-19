@@ -28,7 +28,7 @@ RCT_EXTERN_METHOD(getFileUploadRequestById:(NSString *)id
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
 // Get all file requests
-RCT_EXTERN_METHOD(getAllFileRequests:(NSString *)status
+RCT_EXTERN_METHOD(getAllFileUploadRequests:(NSString *)status
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
