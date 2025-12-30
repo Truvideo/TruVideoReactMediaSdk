@@ -57,7 +57,7 @@
   "homepage": "https://github.com/TruVideo/TruVideoReactMediaSdk#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "access":"restricted"
+    "access": "restricted"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
