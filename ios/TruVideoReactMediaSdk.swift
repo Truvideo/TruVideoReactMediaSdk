@@ -14,41 +14,6 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
     
     private var disposeBag = Set<AnyCancellable>()
     
-    // Add helper function for status conversion
-    private func convertStatusToString(_ status: TruvideoSdkMediaUploadRequest.Status) -> String {
-        switch status {
-        case .idle: return "IDLE"
-        case .processing: return "UPLOADING"
-        case .completed: return "COMPLETED"
-        case .cancelled: return "CANCELED"
-        case .paused: return "PAUSED"
-        case .error: return "ERROR"
-        case .synchronizing: return "SYNCHRONIZING"
-        @unknown default: return "IDLE"
-        }
-    }
-    
-    // Helper function to detect file type from file path
-    private func detectFileType(from filePath: String) -> String {
-        let lowercasedPath = filePath.lowercased()
-        
-        // Video extensions
-        if lowercasedPath.hasSuffix(".mp4") || lowercasedPath.hasSuffix(".mov") ||
-           lowercasedPath.hasSuffix(".m4v") || lowercasedPath.hasSuffix(".avi") ||
-           lowercasedPath.hasSuffix(".mkv") || lowercasedPath.hasSuffix(".wmv") {
-            return "VIDEO"
-        }
-        
-        // Image extensions
-        if lowercasedPath.hasSuffix(".jpg") || lowercasedPath.hasSuffix(".jpeg") ||
-           lowercasedPath.hasSuffix(".png") || lowercasedPath.hasSuffix(".gif") ||
-           lowercasedPath.hasSuffix(".heic") || lowercasedPath.hasSuffix(".webp") {
-            return "IMAGE"
-        }
-        
-        return "FILE"
-    }
-    
     @objc(uploadMedia:withTag:withMetaData:withResolver:withRejecter:)
     func uploadMedia(filePath: String, tag: String, metaData: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         guard let fileURL = URL(string: "file://\(filePath)") else {
@@ -286,13 +251,9 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
                 metadataString = metadataJsonString
             }
             
-            // Detect file type from file path
-            let fileType = detectFileType(from: request.filePath)
-            
-            let mainResponse: [String: Any] = [
+            let mainResponse: [String: String] = [
                 "id": request.id.uuidString,
                 "filePath": request.filePath,
-                "fileType": fileType,
                 "createdAt": request.createdAt != nil ? dateFormatter.string(from: request.createdAt!) : "",
                 "updatedAt": request.updatedAt != nil ? dateFormatter.string(from: request.updatedAt!) : "",
                 "tags": tagString,
@@ -300,7 +261,7 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
                 "remoteId": request.remoteId ?? "",
                 "remoteURL": request.remoteURL?.absoluteString ?? "",
                 "transcriptionURL": request.transcriptionURL ?? "",
-                "status": convertStatusToString(request.status),
+                "status": "\(request.status.rawValue)",
                 "progress": "\(request.uploadProgress)"
             ]
 
@@ -336,13 +297,9 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
                 metadataString = metadataJsonString
             }
             
-            // Detect file type from file path
-            let fileType = detectFileType(from: request.filePath)
-            
-            let mainResponse: [String: Any] = [
+            let mainResponse: [String: String] = [
                 "id": request.id.uuidString,
                 "filePath": request.filePath,
-                "fileType": fileType,
                 "createdAt": request.createdAt != nil ? dateFormatter.string(from: request.createdAt!) : "",
                 "updatedAt": request.updatedAt != nil ? dateFormatter.string(from: request.updatedAt!) : "",
                 "tags": tagString,
@@ -350,7 +307,7 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
                 "remoteId": request.remoteId ?? "",
                 "remoteURL": request.remoteURL?.absoluteString ?? "",
                 "transcriptionURL": request.transcriptionURL ?? "",
-                "status": convertStatusToString(request.status),
+                "status": "\(request.status.rawValue)",
                 "progress": "\(request.uploadProgress)"
             ]
             
@@ -392,7 +349,7 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
             
             let requests = try TruvideoSdkMedia.getFileUploadRequests(byStatus: statusData)
             let dateFormatter = ISO8601DateFormatter()
-            var responseArray: [[String: Any]] = []  // Changed to [String: Any]
+            var responseArray: [[String: String]] = []
 
             for request in requests {
                 var tagString = ""
@@ -407,13 +364,9 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
                     metadataString = metadataJsonString
                 }
 
-                // Detect file type from file path
-                let fileType = detectFileType(from: request.filePath)
-
-                let mainResponse: [String: Any] = [
+                let mainResponse: [String: String] = [
                     "id": request.id.uuidString,
                     "filePath": request.filePath,
-                    "fileType": fileType,
                     "createdAt": request.createdAt != nil ? dateFormatter.string(from: request.createdAt!) : "",
                     "updatedAt": request.updatedAt != nil ? dateFormatter.string(from: request.updatedAt!) : "",
                     "tags": tagString,
@@ -421,7 +374,7 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
                     "remoteId": request.remoteId ?? "",
                     "remoteURL": request.remoteURL?.absoluteString ?? "",
                     "transcriptionURL": request.transcriptionURL ?? "",
-                    "status": convertStatusToString(request.status),
+                    "status": "\(request.status.rawValue)",
                     "progress": "\(request.uploadProgress)"
                 ]
 
