@@ -1,5 +1,4 @@
 const path = require('path');
-const pak = require('../package.json');
 
 module.exports = {
   project: {
@@ -8,7 +7,7 @@ module.exports = {
     },
   },
   dependencies: {
-    [pak.name]: {
+    '@trunpm/truvideo-react-media-sdk': {
       root: path.join(__dirname, '..'),
     },
   },

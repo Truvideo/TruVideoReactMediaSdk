@@ -104,6 +104,16 @@ android {
     }
 }
 
+// Configure Kotlin compiler to skip metadata version check for all modules
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += [
+            "-Xskip-metadata-version-check",
+            "-Xsuppress-version-warnings"
+        ]
+    }
+}
+
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
