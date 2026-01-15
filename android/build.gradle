@@ -1,3 +1,19 @@
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["TruVideoReactMediaSdk_kotlinVersion"]
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:7.2.1"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
 def reactNativeArchitectures() {
   def value = rootProject.getProperties().get("reactNativeArchitectures")
   return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
@@ -47,6 +63,7 @@ android {
   defaultConfig {
     minSdkVersion getExtOrIntegerDefault("minSdkVersion")
     targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+
   }
 
   buildTypes {
@@ -60,23 +77,15 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_17
-    targetCompatibility JavaVersion.VERSION_17
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
   }
+}
 
-  kotlinOptions {
-    jvmTarget = "17"
-  }
-  
-  // Configure Kotlin compiler to skip metadata version check
-  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
-      freeCompilerArgs += [
-        "-Xskip-metadata-version-check",
-        "-Xsuppress-version-warnings"
-      ]
+        freeCompilerArgs += ["-Xskip-metadata-version-check"]
     }
-  }
 }
 
 repositories {
@@ -86,21 +95,43 @@ repositories {
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
 
+// Force all Kotlin stdlib dependencies to use our version
+// Also force Kodein DI to use a version compatible with Kotlin 2.2.0
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+        force "org.kodein.di:kodein-di:7.30.0"
+    }
+}
+
 dependencies {
   // React Native
   implementation "com.facebook.react:react-native:+"
 
-  // Kotlin - force version to match compiler to avoid metadata version conflicts
+  // Kotlin
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0"
+  implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.4.1"
 
   // Truvideo SDK
-  implementation 'com.github.Truvideo:truvideo-sdk-android-media:79.1.2'
+  implementation('com.github.Truvideo:truvideo-sdk-android-media:79.1.2') {
+    // Exclude kotlin-stdlib from Truvideo SDK to use our version
+    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    // Exclude Kodein DI from Truvideo SDK to use our compatible version
+    exclude group: 'org.kodein.di', module: 'kodein-di'
+  }
   implementation 'com.google.code.gson:gson:2.10.1'
 
-  // Kodein DI
-  implementation "org.kodein.di:kodein-di:7.18.0"
+  // Kodein DI - Version 7.30.0 is required for Kotlin 2.2.0 compatibility
+  implementation "org.kodein.di:kodein-di:7.30.0"
 
   // Kotlin Multiplatform Settings
-  implementation "com.russhwolf:multiplatform-settings:1.0.0"
+  implementation "com.russhwolf:multiplatform-settings:1.0.0"          // common
+//  implementation("com.russhwolf:multiplatform-settings-android:1.0.0") {
+//    // Exclude debug variant to avoid duplicates
+//    exclude group: "com.russhwolf", module: "multiplatform-settings-android-debug"
+//  }
+
 }
+
+

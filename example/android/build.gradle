@@ -5,39 +5,29 @@ buildscript {
         compileSdkVersion = 34
         targetSdkVersion = 34
         ndkVersion = "26.1.10909125"
-        kotlinVersion = "2.0.21"
+        kotlinVersion = "2.2.0"
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.0")
+        classpath("com.android.tools.build:gradle:8.3.0")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
 
-apply plugin: "com.facebook.react.rootproject"
-
-// Configure Kotlin compiler options globally to skip metadata version check
 allprojects {
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-        kotlinOptions {
-            freeCompilerArgs += [
-                "-Xskip-metadata-version-check",
-                "-Xsuppress-version-warnings",
-                "-Xallow-unstable-dependencies"
-            ]
+    repositories {
+        maven {
+            url("$rootDir/../node_modules/react-native/android")
         }
-    }
-    
-    // Force Kotlin stdlib version to match compiler
-    configurations.all {
-        resolutionStrategy {
-            force "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-            force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-            force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+        maven {
+            url("$rootDir/../node_modules/jsc-android/dist")
         }
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
