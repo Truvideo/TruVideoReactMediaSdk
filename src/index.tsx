@@ -89,13 +89,13 @@ export async function getAllFileUploadRequests(
     }
   );
 }
+
 export enum MediaType {
-  IMAGE = 'Image',
-  VIDEO = 'Video',
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
   AUDIO = 'AUDIO',
   PDF = 'PDF',
 }
-
 export async function search(
   tags: Map<string, string>,
   page: number,
@@ -119,6 +119,7 @@ export async function search(
     }
   });
 }
+
 
 export class MediaBuilder {
   private _filePath: string;
@@ -495,9 +496,188 @@ export interface UploadErrorEvent {
   error: any;
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Stream Upload (multipart / chunked) - Upload Requests
+// ─────────────────────────────────────────────────────────────────────────────
+
+export type StreamUploadRequestPart = {
+  index: number;
+  createdAt?: string;
+  updatedAt?: string;
+  startedAt?: string;
+  endedAt?: string;
+  isCompleted: boolean;
+};
+
+export type StreamUploadRequestStatus =
+  | 'IDLE'
+  | 'PAUSED'
+  | 'PROCESSING'
+  | 'UPLOAD_PENDING'
+  | 'UPLOADED'
+  | 'ERROR';
+
+export type StreamUploadRequest = {
+  id: string; // Android: Long -> string, iOS: String
+  status: StreamUploadRequestStatus;
+  type?: string;
+  progress?: number;
+  thumbnailPath?: string;
+  mediaId?: string;
+  isStartOperationCompleted?: boolean;
+  startOperationStartedAt?: string;
+  startOperationEndedAt?: string;
+  isCompleteOperationCompleted?: boolean;
+  completeOperationStartedAt?: string;
+  completeOperationEndedAt?: string;
+  parts?: StreamUploadRequestPart[];
+  createdAt?: string;
+  updatedAt?: string;
+  startedAt?: string;
+  endedAt?: string;
+};
+
+export interface SearchByIdData {
+  id: string;
+  createdDate?: string;
+  remoteId?: string;
+  uploadedFileURL?: string;
+  metaData?: Record<string, any>;
+  tags?: Record<string, any>;
+  transcriptionURL?: string;
+  transcriptionLength?: number;
+  fileType?: string;
+  title?: string;
+  duration?: string;
+}
+
+const mapMediaRequestToStreamUploadRequest = (req: MediaRequest | MediaData): StreamUploadRequest => {
+  const requestData = req as MediaData;
+  return {
+    id: requestData.id,
+    status: (requestData.status as StreamUploadRequestStatus) || 'IDLE',
+    type: requestData.fileType,
+    progress:
+      typeof requestData.progress === 'number'
+        ? requestData.progress > 1
+          ? requestData.progress / 100
+          : requestData.progress
+        : 0,
+    mediaId: requestData.remoteId,
+    createdAt: requestData.createdAt,
+    updatedAt: requestData.updatedAt,
+  };
+};
+
+export async function createStreamUploadRequest(filePath: string): Promise<StreamUploadRequest> {
+  const builder = new MediaBuilder(filePath);
+  await builder.build();
+  const detail = (builder as any).mediaDetail as MediaData | undefined;
+  if (!detail) {
+    throw new Error('Unable to create upload request');
+  }
+  return mapMediaRequestToStreamUploadRequest(detail);
+}
+
+export async function getAllStreamUploadRequests(): Promise<StreamUploadRequest[]> {
+  const response = await TruVideoReactMediaSdk.getAllStreamUploadRequests();
+  try {
+    const parsed = JSON.parse(response);
+    return parsed as StreamUploadRequest[];
+  } catch (e) {
+    console.error("Failed to parse stream upload requests:", e);
+    return [];
+  }
+}
+
+export async function getStreamUploadRequestById(id: string): Promise<StreamUploadRequest | null> {
+  const response = await TruVideoReactMediaSdk.getStreamUploadRequestById(id);
+  try {
+    const parsed = JSON.parse(response);
+    if (!parsed || Object.keys(parsed).length === 0) return null;
+    return parsed as StreamUploadRequest;
+  } catch (e) {
+    return null;
+  }
+}
+
+export async function uploadStreamUploadRequest(params: {
+  id: string;
+  title?: string;
+  tags?: Record<string, string> | Map<string, string>;
+  metadata?: Record<string, any> | Map<string, any>;
+  includeInReport?: boolean;
+  isLibrary?: boolean;
+}): Promise<StreamUploadRequest> {
+  const {
+    id,
+    title = "",
+    tags = {},
+    metadata = {},
+    includeInReport = true,
+    isLibrary = true,
+  } = params;
+
+  const tagsObj = tags instanceof Map
+    ? Object.fromEntries(tags)
+    : tags;
+
+  const metadataObj = metadata instanceof Map
+    ? Object.fromEntries(metadata)
+    : metadata;
+
+  await TruVideoReactMediaSdk.uploadStreamUploadRequest(
+    String(id),
+    title,
+    JSON.stringify(tagsObj),
+    JSON.stringify(metadataObj),
+    includeInReport,
+    isLibrary
+  );
+
+  const req = await getStreamUploadRequestById(id);
+  if (!req) {
+    throw new Error('Upload request not found');
+  }
+  return req;
+}
+
+export async function pauseStreamUploadRequest(id: string): Promise<void> {
+  await TruVideoReactMediaSdk.pauseStreamUploadRequest(id);
+}
+
+export async function resumeStreamUploadRequest(id: string): Promise<void> {
+  await TruVideoReactMediaSdk.resumeStreamUploadRequest(id);
+}
+
+export async function retryStreamUploadRequest(id: string): Promise<void> {
+  await TruVideoReactMediaSdk.retryStreamUploadRequest(id);
+}
+
+export async function deleteStreamUploadRequest(id: string): Promise<void> {
+  await TruVideoReactMediaSdk.deleteStreamUploadRequest(id);
+}
+
+
 // Define the signature for the callbacks MediaBuilder will expect
 export interface UploadCallbacks {
   onProgress?: (event: UploadProgressEvent) => void;
   onComplete?: (event: UploadCompleteEventData) => void;
   onError?: (event: UploadErrorEvent) => void;
+}
+
+
+export async function searchById(id: string): Promise<SearchByIdData | null> {
+  if (!id) {
+    throw new Error('searchById: id must not be empty');
+  }
+  const response: string = await TruVideoReactMediaSdk.searchById(id);
+  try {
+    const parsed = JSON.parse(response);
+    if (!parsed || !parsed.id) return null;
+    return parsed as SearchByIdData;
+  } catch (e) {
+    console.error('Failed to parse searchById response:', e);
+    return null;
+  }
 }

@@ -1,5 +1,5 @@
 package com.truvideoreactmediasdk
-
+import android.os.Build
 import android.util.Log
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -9,9 +9,9 @@ import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.truvideo.sdk.media.TruvideoSdkMedia
 import com.truvideo.sdk.media.interfaces.TruvideoSdkMediaCallback
 import com.truvideo.sdk.media.interfaces.TruvideoSdkMediaFileUploadCallback
-import com.truvideo.sdk.media.model.TruvideoSdkMediaFileType
-import com.truvideo.sdk.media.model.TruvideoSdkMediaFileUploadRequest
-import com.truvideo.sdk.media.model.TruvideoSdkMediaFileUploadStatus
+import com.truvideo.sdk.media.model.external.TruvideoSdkMediaFileType
+import com.truvideo.sdk.media.model.external.TruvideoSdkMediaFileUploadRequest
+import com.truvideo.sdk.media.model.external.TruvideoSdkMediaFileUploadRequestStatus
 import com.truvideo.sdk.media.util.toIsoString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,10 +19,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
 import org.json.JSONArray
 import org.json.JSONObject
-import com.truvideo.sdk.media.model.TruvideoSdkMediaTags
+import com.truvideo.sdk.media.model.external.TruvideoSdkMediaTags
 import truvideo.sdk.common.exceptions.TruvideoSdkException
 import java.io.File
-
+import kotlinx.coroutines.withContext
+import org.json.JSONException
+import java.time.format.DateTimeFormatter
+import com.truvideo.sdk.media.model.external.TruvideoSdkMediaModel
+import com.truvideo.sdk.media.model.external.TruvideoSdkMediaResponse
+import com.truvideo.sdk.media.model.external.TruvideoSdkMediaUploadRequest
+import com.truvideo.sdk.media.model.external.TruvideoSdkMediaMetadata
 
 class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
     ReactContextBaseJavaModule(reactContext) {
@@ -41,89 +47,90 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
     fun removeListeners(count: Int) {
         // Keep empty — React Native calls this when JS unsubscribes
     }
+  // ─── Date Helper ─────────────────────────────────────────────────────────
+
+  private fun formatDate(date: java.util.Date?): String? {
+    if (date == null) return null
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      DateTimeFormatter.ISO_INSTANT.format(date.toInstant())
+    } else {
+      date.toString()
+    }
+  }
+
 
     @ReactMethod
     fun uploadMedia(id: String, promise: Promise) {
-        try {
-            TruvideoSdkMedia.getFileUploadRequestById(id, object:
-                TruvideoSdkMediaCallback<TruvideoSdkMediaFileUploadRequest?> {
-                override fun onComplete(data: TruvideoSdkMediaFileUploadRequest?) {
-                    if(data == null) {
-                        promise.reject("File Exceptions", "File upload request not found")
-                        return
-                    }
-
-                    val file = File(data.filePath)
-                    if(!file.exists()) {
-                        promise.reject("File Exceptions", "File not found")
-                        return
-                    }
-
-                    // Upload with BOTH callbacks
-                    data.upload(
-                        object: TruvideoSdkMediaCallback<Unit> {
-                            override fun onComplete(data: Unit) {
-                                // Basic completion callback
-                            }
-                            override fun onError(exception: TruvideoSdkException) {
-                                promise.reject("TruvideoSdkException", exception.message)
-                            }
-                        },
-                        object: TruvideoSdkMediaFileUploadCallback {
-                            override fun onComplete(id: String, response: TruvideoSdkMediaFileUploadRequest) {
-                                val metadataObj = JSONObject()
-                                response.metadata.map.keys.forEach { key ->
-                                    metadataObj.put(key, response.metadata.map[key])
-                                }
-                                val tagsObj = JSONObject()
-                                response.tags.map.keys.forEach { key ->
-                                    tagsObj.put(key, response.tags.map[key])
-                                }
-
-                                val mainResponse = JSONObject().apply {
-                                    put("id", id)
-                                    put("createdDate", response.createdAt.toIsoString())
-                                    put("remoteId", response.remoteId)
-                                    put("uploadedFileURL", response.remoteUrl)
-                                    put("metaData", metadataObj)
-                                    put("tags", tagsObj)
-                                    put("transcriptionURL", response.transcriptionUrl)
-                                    put("transcriptionLength", response.transcriptionLength)
-                                    put("fileType", response.type.name)
-                                }
-
-                                promise.resolve(mainResponse.toString())
-                                sendEvent(reactApplicationContext, "onComplete", mainResponse.toString())
-                            }
-
-                            override fun onProgressChanged(id: String, progress: Float) {
-                                val mainResponse = JSONObject().apply {
-                                    put("id", id)
-                                    put("progress", (progress * 100))
-                                }
-                                sendEvent(reactApplicationContext, "onProgress", mainResponse.toString())
-                            }
-
-                            override fun onError(id: String, ex: TruvideoSdkException) {
-                                val mainResponse = JSONObject().apply {
-                                    put("id", id)
-                                    put("error", ex.message)
-                                }
-                                sendEvent(reactApplicationContext, "onError", mainResponse.toString())
-                                promise.reject(id, ex.message, ex)
-                            }
-                        }
-                    )
-                }
-
-                override fun onError(exception: TruvideoSdkException) {
+      try {
+        TruvideoSdkMedia.getFileUploadRequestById(
+          id,
+          object : TruvideoSdkMediaCallback<TruvideoSdkMediaFileUploadRequest?> {
+            override fun onComplete(data: TruvideoSdkMediaFileUploadRequest?) {
+              if (data == null) {
+                promise.reject("File Exceptions", "Upload request not found")
+                return
+              }
+              val file = File(data.filePath)
+              if (!file.exists()) {
+                promise.reject("File Exceptions", "File not found")
+                return
+              }
+              data.upload(
+                object : TruvideoSdkMediaCallback<Unit> {
+                  override fun onComplete(data: Unit) { }
+                  override fun onError(exception: TruvideoSdkException) {
                     promise.reject("TruvideoSdkException", exception.message)
+                  }
+                },
+                object : TruvideoSdkMediaFileUploadCallback {
+                  override fun onComplete(id: String, response: TruvideoSdkMediaFileUploadRequest) {
+                    val metadataObj = JSONObject(response.metadata.toMap() as Map<*, *>)
+                    val tagsObj = JSONObject(response.tags.toMap() as Map<*, *>)
+                    val mainResponse = JSONObject().apply {
+                      put("id", id)
+                      put("createdDate", formatDate(response.createdAt))
+                      put("remoteId", response.mediaId ?: "")
+                      put("uploadedFileURL", response.mediaUrl ?: "")
+                      put("metaData", metadataObj)
+                      put("tags", tagsObj)
+                      put("transcriptionURL", response.transcriptionUrl ?: "")
+                      put("fileType", response.fileType.name)
+                    }
+                    promise.resolve(mainResponse.toString())
+                    sendEvent(reactApplicationContext, "onComplete", mainResponse.toString())
+                  }
+
+                  override fun onProgressChanged(id: String, progress: Float) {
+                    val mainResponse = JSONObject().apply {
+                      put("id", id)
+                      put("progress", progress * 100)
+                    }
+                    sendEvent(reactApplicationContext, "onProgress", mainResponse.toString())
+                  }
+
+                  override fun onError(id: String, ex: TruvideoSdkException) {
+                    val mainResponse = JSONObject().apply {
+                      put("id", id)
+                      put("error", ex.message ?: "Unknown error")
+                    }
+                    sendEvent(reactApplicationContext, "onError", mainResponse.toString())
+                    promise.reject(id, ex.message, ex)
+                  }
                 }
-            })
-        } catch (e: Exception) {
-            promise.reject("Exception", e.message)
-        }
+              )
+            }
+
+            override fun onError(exception: TruvideoSdkException) {
+              promise.reject("TruvideoSdkException", exception.message)
+            }
+          }
+        )
+      } catch (e: Exception) {
+        promise.reject("Exception", e.message)
+      }
     }
+
+
 
     @ReactMethod
     fun mediaBuilder(filePath: String?, tag: String?, metaData: String?, promise: Promise?) {
@@ -141,46 +148,30 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
         }
     }
 
-    fun returnRequestsJson(requests: List<TruvideoSdkMediaFileUploadRequest>): String {
-        val jsonArray = JSONArray()
 
-        for (request in requests) {
-            val jsonObject = JSONObject().apply {
-                put("id", request.id)
-                put("filePath", request.filePath)
-                put("fileType", request.type)
-                put("createdAt", request.createdAt.toIsoString())
-                put("updateAt", request.updatedAt.toIsoString())
-                put("tags", request.tags)
-                put("metadata", request.metadata)
-                put("durationMilliseconds", request.durationMilliseconds)
-                put("remoteId", request.remoteId)
-                put("remoteURL", request.remoteUrl)
-                put("transcriptionURL", request.transcriptionUrl)
-                put("transcriptionLength", request.transcriptionLength)
-                put("status", request.status)
-                put("progress", request.uploadProgress)
-            }
-            jsonArray.put(jsonObject)
-        }
+  // ─── Map Helpers ──────────────────────────────────────────────────────────
 
-        return jsonArray.toString()
+  fun returnRequestsJson(requests: List<TruvideoSdkMediaFileUploadRequest>): String {
+    val jsonArray = JSONArray()
+    for (request in requests) {
+      jsonArray.put(JSONObject(returnRequest(request)))
     }
+    return jsonArray.toString()
+  }
 
     fun returnRequest(request : TruvideoSdkMediaFileUploadRequest) : String{
         return JSONObject().apply {
             put("id", request.id)
             put("filePath", request.filePath)
-            put("fileType", request.type)
+            put("fileType", request.fileType.name)
             put("createdAt", request.createdAt.toIsoString() )
             put("updateAt",request.updatedAt.toIsoString())
             put("tags" , request.tags)
             put("metadata", request.metadata)
             put("durationMilliseconds", request.durationMilliseconds)
-            put("remoteId", request.remoteId)
-            put("remoteURL", request.remoteUrl)
+          put("remoteId", request.mediaId ?: "")
+          put("remoteURL", request.mediaUrl ?: "")
             put("transcriptionURL", request.transcriptionUrl)
-            put("transcriptionLength", request.transcriptionLength)
             put("status", request.status)
             put("progress", request.uploadProgress)
         }.toString()
@@ -245,14 +236,14 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
                     val request = TruvideoSdkMedia.getAllFileUploadRequests()
                     promise!!.resolve(returnRequestsJson(request))
                 }else{
-                    val mainStatus : TruvideoSdkMediaFileUploadStatus? = when(status) {
-                        "UPLOADING" -> TruvideoSdkMediaFileUploadStatus.UPLOADING
-                        "IDLE" -> TruvideoSdkMediaFileUploadStatus.IDLE
-                        "ERROR" -> TruvideoSdkMediaFileUploadStatus.ERROR
-                        "PAUSED" -> TruvideoSdkMediaFileUploadStatus.PAUSED
-                        "COMPLETED" -> TruvideoSdkMediaFileUploadStatus.COMPLETED
-                        "CANCELED" -> TruvideoSdkMediaFileUploadStatus.CANCELED
-                        "SYNCHRONIZING" -> TruvideoSdkMediaFileUploadStatus.SYNCHRONIZING
+                    val mainStatus : TruvideoSdkMediaFileUploadRequestStatus? = when(status) {
+                        "UPLOADING" -> TruvideoSdkMediaFileUploadRequestStatus.UPLOADING
+                        "IDLE" -> TruvideoSdkMediaFileUploadRequestStatus.IDLE
+                        "ERROR" -> TruvideoSdkMediaFileUploadRequestStatus.ERROR
+                        "PAUSED" -> TruvideoSdkMediaFileUploadRequestStatus.PAUSED
+                        "COMPLETED" -> TruvideoSdkMediaFileUploadRequestStatus.COMPLETED
+                        "CANCELED" -> TruvideoSdkMediaFileUploadRequestStatus.CANCELED
+                        "SYNCHRONIZING" -> TruvideoSdkMediaFileUploadRequestStatus.SYNCHRONIZING
                         else -> null
                     }
                     val request = TruvideoSdkMedia.getAllFileUploadRequests(mainStatus)
@@ -308,96 +299,74 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
         }
     }
 
-    // ✅ FIXED: Better pause handling with state validation
-    @ReactMethod
-    fun pauseMedia(id: String?, promise: Promise?) {
-        try {
-            scope.launch {
-                try {
-                    Log.d(NAME, "Attempting to pause upload: $id")
 
-                    val request = TruvideoSdkMedia.getFileUploadRequestById(id!!)
 
-                    if (request == null) {
-                        Log.e(NAME, "Pause failed: Upload request not found for ID: $id")
-                        promise!!.reject("NOT_FOUND", "Upload request not found. The upload may have been completed or deleted.")
-                        return@launch
-                    }
+  // ─── pauseMedia ───────────────────────────────────────────────────────────
 
-                    // ✅ Check if upload is actually in UPLOADING state
-                    val currentStatus = request.status
-                    Log.d(NAME, "Current upload status for $id: $currentStatus")
-
-                    if (currentStatus != TruvideoSdkMediaFileUploadStatus.UPLOADING) {
-                        Log.w(NAME, "Cannot pause upload in $currentStatus state. Must be UPLOADING.")
-                        promise!!.reject(
-                            "INVALID_STATE",
-                            "Cannot pause upload. Current state: $currentStatus. Upload must be actively uploading to pause."
-                        )
-                        return@launch
-                    }
-
-                    // ✅ Add small delay to ensure upload has actually started
-                    delay(100)
-
-                    request.pause()
-                    Log.d(NAME, "Successfully paused upload: $id")
-                    promise!!.resolve("Pause Success")
-
-                } catch (e: TruvideoSdkException) {
-                    Log.e(NAME, "Pause SDK error: ${e.message}")
-                    promise!!.reject("SDK_ERROR", e.message ?: "Failed to pause upload. The upload may not be in a pausable state.")
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(NAME, "Pause exception: ${e.message}")
-            promise!!.reject("Exception", e.message)
+  @ReactMethod
+  fun pauseMedia(id: String?, promise: Promise?) {
+    try {
+      scope.launch {
+        val request = TruvideoSdkMedia.getFileUploadRequestById(id!!)
+        if (request == null) {
+          promise!!.reject("ERROR", "Upload request not found")
+          return@launch
         }
-    }
-
-    // ✅ FIXED: Better resume handling with state validation
-    @ReactMethod
-    fun resumeMedia(id: String?, promise: Promise?) {
-        try {
-            scope.launch {
-                try {
-                    Log.d(NAME, "Attempting to resume upload: $id")
-
-                    val request = TruvideoSdkMedia.getFileUploadRequestById(id!!)
-
-                    if (request == null) {
-                        Log.e(NAME, "Resume failed: Upload request not found for ID: $id")
-                        promise!!.reject("NOT_FOUND", "Upload request not found. The upload may have been completed or deleted.")
-                        return@launch
-                    }
-
-                    // ✅ Check if upload is actually in PAUSED state
-                    val currentStatus = request.status
-                    Log.d(NAME, "Current upload status for $id: $currentStatus")
-
-                    if (currentStatus != TruvideoSdkMediaFileUploadStatus.PAUSED) {
-                        Log.w(NAME, "Cannot resume upload in $currentStatus state. Must be PAUSED.")
-                        promise!!.reject(
-                            "INVALID_STATE",
-                            "Cannot resume upload. Current state: $currentStatus. Upload must be paused to resume."
-                        )
-                        return@launch
-                    }
-
-                    request.resume()
-                    Log.d(NAME, "Successfully resumed upload: $id")
-                    promise!!.resolve("Resume Success")
-
-                } catch (e: TruvideoSdkException) {
-                    Log.e(NAME, "Resume SDK error: ${e.message}")
-                    promise!!.reject("SDK_ERROR", e.message ?: "Failed to resume upload. The upload may not be in a resumable state.")
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(NAME, "Resume exception: ${e.message}")
-            promise!!.reject("Exception", e.message)
+        when (request.status) {
+          TruvideoSdkMediaFileUploadRequestStatus.UPLOADING -> {
+            request.pause()
+            promise!!.resolve("Pause Success")
+          }
+          TruvideoSdkMediaFileUploadRequestStatus.PAUSED -> {
+            promise!!.reject("ALREADY_PAUSED", "Upload is already paused")
+          }
+          TruvideoSdkMediaFileUploadRequestStatus.COMPLETED -> {
+            promise!!.reject("COMPLETED", "Upload is already completed")
+          }
+          else -> {
+            promise!!.reject("INVALID_STATE", "Cannot pause. Current status: ${request.status}")
+          }
         }
+      }
+    } catch (e: TruvideoSdkException) {
+      promise!!.reject("TruvideoSdkException", e.message)
+    } catch (e: Exception) {
+      promise!!.reject("Exception", e.message)
     }
+  }
+
+  @ReactMethod
+  fun resumeMedia(id: String?, promise: Promise?) {
+    try {
+      scope.launch {
+        val request = TruvideoSdkMedia.getFileUploadRequestById(id!!)
+        if (request == null) {
+          promise!!.reject("ERROR", "Upload request not found")
+          return@launch
+        }
+        when (request.status) {
+          TruvideoSdkMediaFileUploadRequestStatus.PAUSED -> {
+            request.resume()
+            promise!!.resolve("Resume Success")
+          }
+          TruvideoSdkMediaFileUploadRequestStatus.UPLOADING -> {
+            promise!!.reject("ALREADY_UPLOADING", "Upload is already in progress")
+          }
+          TruvideoSdkMediaFileUploadRequestStatus.COMPLETED -> {
+            promise!!.reject("COMPLETED", "Upload is already completed")
+          }
+          else -> {
+            promise!!.reject("INVALID_STATE", "Cannot resume. Current status: ${request.status}. Must be PAUSED.")
+          }
+        }
+      }
+    } catch (e: TruvideoSdkException) {
+      promise!!.reject("TruvideoSdkException", e.message)
+    } catch (e: Exception) {
+      promise!!.reject("Exception", e.message)
+    }
+  }
+
 
     @ReactMethod
     fun search(
@@ -407,46 +376,50 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
         pageSize: String?,
         promise: Promise?
     ) {
-        try{
-            scope.launch {
-                val typeData : TruvideoSdkMediaFileType = when (type) {
-                    "Video" -> TruvideoSdkMediaFileType.Video
+        scope.launch {
+            try {
+                // ✅ Correct type mapping
+                val typeData: TruvideoSdkMediaFileType? = when (type?.uppercase()) {
+                    "VIDEO" -> TruvideoSdkMediaFileType.VIDEO
                     "AUDIO" -> TruvideoSdkMediaFileType.AUDIO
-                    "PDF" -> TruvideoSdkMediaFileType.PDF
-                    "Image" -> TruvideoSdkMediaFileType.Picture
-                    else -> TruvideoSdkMediaFileType.All
+                    "PDF"   -> TruvideoSdkMediaFileType.DOCUMENT
+                    "IMAGE" -> TruvideoSdkMediaFileType.IMAGE
+                    else    -> null
                 }
 
-                val jsonTag = JSONObject(tag!!)
-                val map = mutableMapOf<String, String>()
-                val keys = jsonTag.keys()
-                while (keys.hasNext()) {
-                    val key = keys.next()
-                    val value= jsonTag.getString(key)
-                    map[key] = value
+                // ✅ Correct tag parsing
+                val tagsList = mutableListOf<TruvideoSdkMediaTags.Entry>()
+                try {
+                    val jsonTag = JSONObject(tag ?: "{}")
+                    val keys = jsonTag.keys()
+                    while (keys.hasNext()) {
+                        val key = keys.next()
+                        tagsList.add(
+                            TruvideoSdkMediaTags.Entry(key, jsonTag.getString(key))
+                        )
+                    }
+                } catch (e: JSONException) {
+                    Log.e(NAME, "Tag parse error: ${e.message}")
                 }
 
-                val response = TruvideoSdkMedia.search(
-                    tags = TruvideoSdkMediaTags(map),
+                // ✅ Correct API call
+                val resultData = TruvideoSdkMedia.search(
+                    tags = TruvideoSdkMediaTags(tagsList),
                     type = typeData,
-                    pageNumber = page!!.toInt(),
-                    pageSize = pageSize!!.toInt()
+                    page = page?.toIntOrNull() ?: 0,
+                    pageSize = pageSize?.toIntOrNull() ?: 10,
+                    isLibrary = null
                 )
 
                 val jsonArray = JSONArray()
-                response.data.forEach { item ->
-                    val metadataObj = JSONObject()
-                    item.metadata.map.keys.forEach { key ->
-                        metadataObj.put(key, item.metadata.map[key])
-                    }
-                    val tagsObj = JSONObject()
-                    item.tags.map.keys.forEach { key ->
-                        tagsObj.put(key, item.tags.map[key])
-                    }
 
-                    val jsonObject = JSONObject().apply {
+                resultData?.data?.items?.forEach { item ->
+                    val metadataObj = JSONObject(item.metadata.toMap() as Map<*, *>)
+                    val tagsObj = JSONObject(item.tags.toMap() as Map<*, *>)
+
+                    jsonArray.put(JSONObject().apply {
                         put("id", item.id)
-                        put("createdDate", item.createdDate.toIsoString())
+                        put("createdDate", formatDate(item.createdAt))
                         put("remoteId", item.id)
                         put("uploadedFileURL", item.url)
                         put("metaData", metadataObj)
@@ -454,18 +427,416 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
                         put("transcriptionURL", item.transcriptionUrl)
                         put("transcriptionLength", item.transcriptionLength)
                         put("fileType", item.type.name)
-                        put("thumbnailUrl", item.thumbnailUrl)
-                        put("previewUrl", item.previewUrl)
-                    }
-                    jsonArray.put(jsonObject)
+                        put("title", item.title)
+                        put("duration", item.duration ?: "0")
+                        put("isLibrary", item.isLibrary)
+                    })
                 }
 
-                promise!!.resolve(jsonArray.toString())
+                // ✅ IMPORTANT: same structure as TurboModule
+                val responseObject = JSONObject().apply {
+                    put("data", jsonArray)
+                    put("last", resultData?.data?.last)
+                    put("totalElements", resultData?.data?.totalElements)
+                    put("totalPages", resultData?.data?.totalPages)
+                    put("number", resultData?.data?.page)
+                    put("size", resultData?.data?.pageSize)
+                }
+
+                // ✅ MUST return on Main thread
+                withContext(Dispatchers.Main) {
+                    promise?.resolve(responseObject.toString())
+                }
+
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    promise?.reject("SEARCH_ERROR", e.message, e)
+                }
             }
-        }catch (e: Exception){
-            promise!!.reject("Exception",e.message)
         }
     }
+
+  // ─── searchById ───────────────────────────────────────────────────────────
+
+  @ReactMethod
+  fun searchById(id: String, promise: Promise) {
+    if (id.isEmpty()) {
+      promise.reject("INVALID_ID", "Search ID cannot be empty")
+      return
+    }
+
+    TruvideoSdkMedia.searchById(
+      id = id,
+      callback = object : TruvideoSdkMediaCallback<TruvideoSdkMediaResponse<TruvideoSdkMediaModel?>?> {
+        override fun onComplete(data: TruvideoSdkMediaResponse<TruvideoSdkMediaModel?>?) {
+          scope.launch {
+            try {
+              if (data == null) {
+                withContext(Dispatchers.Main) {
+                  promise.reject("NO_DATA", "No data found for ID: $id")
+                }
+                return@launch
+              }
+
+              val metadataObj = JSONObject().apply {
+                data.data?.metadata?.toMap()?.forEach { (key, value) -> put(key, value) }
+              }
+              val tagsObj = JSONObject().apply {
+                data.data?.tags?.toMap()?.forEach { (key, value) -> put(key, value) }
+              }
+
+              val jsonObject = JSONObject().apply {
+                put("id", data.data?.id)
+                put("createdDate", formatDate(data.data?.createdAt))
+                put("remoteId", data.data?.id)
+                put("uploadedFileURL", data.data?.url)
+                put("metaData", metadataObj)
+                put("tags", tagsObj)
+                put("transcriptionURL", data.data?.transcriptionUrl)
+                put("transcriptionLength", data.data?.transcriptionLength)
+                put("fileType", data.data?.type?.name)
+                put("title", data.data?.title)
+                put("duration", data.data?.duration ?: "0")
+              }
+
+              withContext(Dispatchers.Main) {
+                promise.resolve(jsonObject.toString())
+              }
+            } catch (e: Exception) {
+              withContext(Dispatchers.Main) {
+                promise.reject("SEARCH_BY_ID_ERROR", e.message ?: "Unknown error")
+              }
+            }
+          }
+        }
+
+        override fun onError(exception: TruvideoSdkException) {
+          scope.launch {
+            withContext(Dispatchers.Main) {
+              promise.reject("SEARCH_BY_ID_ERROR", exception.message ?: "Unknown error")
+            }
+          }
+        }
+      }
+    )
+  }
+
+  // ─── Stream Upload — createStreamUploadRequest ────────────────────────────
+
+  @ReactMethod
+  fun createStreamUploadRequest(filePath: String?, promise: Promise?) {
+    promise!!.reject(
+      "NOT_SUPPORTED",
+      "Stream upload requests are created by the recording SDK, not by this method. " +
+        "Use getAllStreamUploadRequests() to list pending requests after recording."
+    )
+  }
+
+  // ─── Stream Upload Map Helper ─────────────────────────────────────────────
+
+  private fun mapStreamUploadRequestToJson(request: TruvideoSdkMediaUploadRequest): JSONObject {
+    val partsList = JSONArray()
+    request.parts.forEach { part ->
+      partsList.put(JSONObject().apply {
+        put("index", part.index)
+        put("createdAt", formatDate(part.createdAt))
+        put("updatedAt", formatDate(part.updatedAt))
+        put("startedAt", formatDate(part.metrics.startedAt))
+        put("endedAt", formatDate(part.metrics.endedAt))
+        put("isCompleted", part.metrics.completed)
+      })
+    }
+    return JSONObject().apply {
+      put("id", request.id.toString())
+      put("title", request.title ?: "")
+      put("status", request.status.name)
+      put("type", request.type.name)
+      put("progress", (request.progress * 100))
+      put("thumbnailPath", request.thumbnailPath ?: "")
+      put("mediaId", request.mediaId ?: "")
+      put("tags", JSONObject(request.tags.toMap() as Map<*, *>))
+      put("metadata", JSONObject(request.metadata.toMap() as Map<*, *>))
+      put("includeInReport", request.includeInReport)
+      put("isLibrary", request.isLibrary)
+      put("isStartOperationCompleted", request.fileUploadMetrics.completed)
+      put("startOperationStartedAt", formatDate(request.fileUploadMetrics.startedAt))
+      put("startOperationEndedAt", formatDate(request.fileUploadMetrics.endedAt))
+      put("isCompleteOperationCompleted", request.completionMetrics.completed)
+      put("completeOperationStartedAt", formatDate(request.completionMetrics.startedAt))
+      put("completeOperationEndedAt", formatDate(request.completionMetrics.endedAt))
+      put("parts", partsList)
+      put("createdAt", formatDate(request.createdAt))
+      put("updatedAt", formatDate(request.updatedAt))
+      put("startedAt", formatDate(request.fileUploadMetrics.startedAt))
+      put("endedAt", formatDate(request.completionMetrics.endedAt))
+    }
+  }
+
+  // ─── JSON → Tags / Metadata helpers ──────────────────────────────────────
+
+  private fun buildTagsFromJson(jsonStr: String): TruvideoSdkMediaTags {
+    val entries = mutableListOf<TruvideoSdkMediaTags.Entry>()
+    try {
+      val json = JSONObject(jsonStr)
+      json.keys().forEach { key ->
+        entries.add(TruvideoSdkMediaTags.Entry(key, json.getString(key)))
+      }
+    } catch (_: JSONException) { }
+    return TruvideoSdkMediaTags(entries)
+  }
+
+  private fun buildMetadataFromJson(jsonStr: String): TruvideoSdkMediaMetadata {
+    val builder = TruvideoSdkMediaMetadata.builder()
+    try {
+      val json = JSONObject(jsonStr)
+      json.keys().forEach { key ->
+        builder.set(key, json.getString(key))
+      }
+    } catch (_: JSONException) { }
+    return builder.build()
+  }
+  // ─── Stream Upload — getAllStreamUploadRequests ───────────────────────────
+
+  @ReactMethod
+  fun getAllStreamUploadRequests(promise: Promise?) {
+    scope.launch {
+      try {
+        val requests = TruvideoSdkMedia.getAllUploadRequests()
+        val jsonArray = JSONArray()
+        requests.forEach { request ->
+          jsonArray.put(mapStreamUploadRequestToJson(request))
+        }
+        withContext(Dispatchers.Main) {
+          promise!!.resolve(jsonArray.toString())
+        }
+      } catch (e: TruvideoSdkException) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("TruvideoSdkException", e.message)
+        }
+      } catch (e: Exception) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("Exception", e.message)
+        }
+      }
+    }
+  }
+
+  // ─── Stream Upload — getStreamUploadRequestById ───────────────────────────
+
+  @ReactMethod
+  fun getStreamUploadRequestById(id: String?, promise: Promise?) {
+    val longId = id?.toLongOrNull()
+    if (longId == null) {
+      promise!!.reject("INVALID_ID", "Stream upload request ID must be a valid numeric (Long) value")
+      return
+    }
+    scope.launch {
+      try {
+        val request = TruvideoSdkMedia.getUploadRequestById(longId)
+        withContext(Dispatchers.Main) {
+          if (request == null) {
+            promise!!.resolve("{}")
+          } else {
+            promise!!.resolve(mapStreamUploadRequestToJson(request).toString())
+          }
+        }
+      } catch (e: TruvideoSdkException) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("TruvideoSdkException", e.message)
+        }
+      } catch (e: Exception) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("Exception", e.message)
+        }
+      }
+    }
+  }
+
+  // ─── Stream Upload — uploadStreamUploadRequest ────────────────────────────
+
+  @ReactMethod
+  fun uploadStreamUploadRequest(
+    id: String?,
+    title: String?,
+    tags: String?,
+    metadata: String?,
+    includeInReport: Boolean,
+    isLibrary: Boolean,
+    promise: Promise?
+  ) {
+    val longId = id?.toLongOrNull()
+    if (longId == null) {
+      promise!!.reject("INVALID_ID", "Stream upload request ID must be a valid numeric (Long) value")
+      return
+    }
+    scope.launch {
+      try {
+        val request = TruvideoSdkMedia.getUploadRequestById(longId)
+        if (request == null) {
+          withContext(Dispatchers.Main) {
+            promise!!.reject("NOT_FOUND", "Stream upload request not found for id: $id")
+          }
+          return@launch
+        }
+        val tagsObj = buildTagsFromJson(tags ?: "{}")
+        val metadataObj = buildMetadataFromJson(metadata ?: "{}")
+        request.upload(
+          title = title ?: "",
+          tags = tagsObj,
+          metadata = metadataObj,
+          includeInReport = includeInReport,
+          isLibrary = isLibrary
+        )
+        withContext(Dispatchers.Main) {
+          promise!!.resolve("Stream upload started")
+        }
+      } catch (e: TruvideoSdkException) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("TruvideoSdkException", e.message)
+        }
+      } catch (e: Exception) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("Exception", e.message)
+        }
+      }
+    }
+  }
+
+  // ─── Stream Upload — pauseStreamUploadRequest ─────────────────────────────
+
+  @ReactMethod
+  fun pauseStreamUploadRequest(id: String?, promise: Promise?) {
+    val longId = id?.toLongOrNull()
+    if (longId == null) {
+      promise!!.reject("INVALID_ID", "Stream upload request ID must be a valid numeric (Long) value")
+      return
+    }
+    scope.launch {
+      try {
+        val request = TruvideoSdkMedia.getUploadRequestById(longId)
+        if (request == null) {
+          withContext(Dispatchers.Main) {
+            promise!!.reject("NOT_FOUND", "Stream upload request not found for id: $id")
+          }
+          return@launch
+        }
+        request.pause()
+        withContext(Dispatchers.Main) {
+          promise!!.resolve("Stream paused")
+        }
+      } catch (e: TruvideoSdkException) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("TruvideoSdkException", e.message)
+        }
+      } catch (e: Exception) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("Exception", e.message)
+        }
+      }
+    }
+  }
+
+  // ─── Stream Upload — resumeStreamUploadRequest ────────────────────────────
+
+  @ReactMethod
+  fun resumeStreamUploadRequest(id: String?, promise: Promise?) {
+    val longId = id?.toLongOrNull()
+    if (longId == null) {
+      promise!!.reject("INVALID_ID", "Stream upload request ID must be a valid numeric (Long) value")
+      return
+    }
+    scope.launch {
+      try {
+        val request = TruvideoSdkMedia.getUploadRequestById(longId)
+        if (request == null) {
+          withContext(Dispatchers.Main) {
+            promise!!.reject("NOT_FOUND", "Stream upload request not found for id: $id")
+          }
+          return@launch
+        }
+        request.resume()
+        withContext(Dispatchers.Main) {
+          promise!!.resolve("Stream resumed")
+        }
+      } catch (e: TruvideoSdkException) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("TruvideoSdkException", e.message)
+        }
+      } catch (e: Exception) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("Exception", e.message)
+        }
+      }
+    }
+  }
+
+  // ─── Stream Upload — retryStreamUploadRequest ─────────────────────────────
+
+  @ReactMethod
+  fun retryStreamUploadRequest(id: String?, promise: Promise?) {
+    val longId = id?.toLongOrNull()
+    if (longId == null) {
+      promise!!.reject("INVALID_ID", "Stream upload request ID must be a valid numeric (Long) value")
+      return
+    }
+    scope.launch {
+      try {
+        val request = TruvideoSdkMedia.getUploadRequestById(longId)
+        if (request == null) {
+          withContext(Dispatchers.Main) {
+            promise!!.reject("NOT_FOUND", "Stream upload request not found for id: $id")
+          }
+          return@launch
+        }
+        request.retry()
+        withContext(Dispatchers.Main) {
+          promise!!.resolve("Stream retried")
+        }
+      } catch (e: TruvideoSdkException) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("TruvideoSdkException", e.message)
+        }
+      } catch (e: Exception) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("Exception", e.message)
+        }
+      }
+    }
+  }
+
+  // ─── Stream Upload — deleteStreamUploadRequest ────────────────────────────
+
+  @ReactMethod
+  fun deleteStreamUploadRequest(id: String?, promise: Promise?) {
+    val longId = id?.toLongOrNull()
+    if (longId == null) {
+      promise!!.reject("INVALID_ID", "Stream upload request ID must be a valid numeric (Long) value")
+      return
+    }
+    scope.launch {
+      try {
+        val request = TruvideoSdkMedia.getUploadRequestById(longId)
+        if (request == null) {
+          withContext(Dispatchers.Main) {
+            promise!!.reject("NOT_FOUND", "Stream upload request not found for id: $id")
+          }
+          return@launch
+        }
+        request.delete()
+        withContext(Dispatchers.Main) {
+          promise!!.resolve("Stream deleted")
+        }
+      } catch (e: TruvideoSdkException) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("TruvideoSdkException", e.message)
+        }
+      } catch (e: Exception) {
+        withContext(Dispatchers.Main) {
+          promise!!.reject("Exception", e.message)
+        }
+      }
+    }
+  }
 
     fun sendEvent(reactContext: ReactApplicationContext, eventName: String, progress: String) {
         reactContext
