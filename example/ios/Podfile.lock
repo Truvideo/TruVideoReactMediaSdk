@@ -1500,6 +1500,27 @@ PODS:
     - React-perflogger (= 0.77.3)
     - React-utils (= 0.77.3)
   - SocketRocket (0.7.1)
+  - truvideo-react-core-sdk (1.0.0-beta.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - truvideo-react-media-sdk (1.0.0-beta.1):
     - DoubleConversion
     - glog
@@ -1520,6 +1541,7 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
+    - truvideo-react-core-sdk
     - Yoga
   - Yoga (0.0.0)
 
@@ -1591,6 +1613,7 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - truvideo-react-core-sdk (from `/Users/mac/Documents/hemant/Truvideo-RN-Project/SDK-Module/TruVideoReactCoreSdk`)
   - truvideo-react-media-sdk (from `../..`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1730,6 +1753,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  truvideo-react-core-sdk:
+    :path: "/Users/mac/Documents/hemant/Truvideo-RN-Project/SDK-Module/TruVideoReactCoreSdk"
   truvideo-react-media-sdk:
     :path: "../.."
   Yoga:
@@ -1802,9 +1827,10 @@ SPEC CHECKSUMS:
   ReactCodegen: c9645fb81bcaf5afebaebb25874bcd5224cd40f1
   ReactCommon: 271491c2343c91609d3dc18bb4b4ebe67160de03
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  truvideo-react-media-sdk: b7cde2ee07f69bb60381637a8e10b6be3f4ccfaa
+  truvideo-react-core-sdk: c300ce1a58373aeb052f0231d3807b09914117ec
+  truvideo-react-media-sdk: d2c93daa5a0dda8920475fa2078fd96b518477b9
   Yoga: 92f3bb322c40a86b7233b815854730442e01b8c4
 
-PODFILE CHECKSUM: e6b8b420a8a15e2c33308b742da543f2e9cadf0a
+PODFILE CHECKSUM: c88d515c5b37fa8d52ff8757774f1e812d79fb74
 
 COCOAPODS: 1.16.2

@@ -8,6 +8,9 @@ require Pod::Executable.execute_command('node', ['-p',
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
+core_sdk_path = File.expand_path('../../../TruVideoReactCoreSdk', __dir__)
+
+  
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
@@ -16,6 +19,10 @@ end
 
 target 'TruVideoReactMediaSdkExample' do
   config = use_native_modules!
+
+   if File.exist?(File.join(core_sdk_path, 'truvideo-react-core-sdk.podspec'))
+    pod 'truvideo-react-core-sdk', :path => core_sdk_path
+  end
 
   use_react_native!(
     :path => config[:reactNativePath],
