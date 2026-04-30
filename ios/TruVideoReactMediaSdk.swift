@@ -451,12 +451,18 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
             _ = tagBuild.set(key, "\(value)")
         }
         
-        var typeData: TruvideoSdkMediaType?
-        if type == "Image" {
+        let normalizedType = type.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        let typeData: TruvideoSdkMediaType?
+        switch normalizedType {
+        case "IMAGE":
             typeData = .image
-        } else if type == "Video" {
+        case "VIDEO":
             typeData = .video
-        } else {
+        case "AUDIO":
+            typeData = .audio
+        case "PDF", "DOCUMENT", "DOCUMENTS":
+            typeData = .document
+        default:
             typeData = nil
         }
         
