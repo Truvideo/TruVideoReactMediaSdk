@@ -9486,7 +9486,7 @@
       "kind": "StringLiteral",
       "offset": 119,
       "length": 8,
-      "value": "\"79.0.1\""
+      "value": "\"79.0.2\""
     },
     {
       "filePath": "\/Users\/runner\/work\/truvideo-ios-sdk\/truvideo-ios-sdk\/Libraries\/Plugins\/External\/Media\/Sources\/Version.swift",

@@ -12,7 +12,7 @@ import com.truvideo.sdk.media.interfaces.TruvideoSdkMediaFileUploadCallback
 import com.truvideo.sdk.media.model.external.TruvideoSdkMediaFileType
 import com.truvideo.sdk.media.model.external.TruvideoSdkMediaFileUploadRequest
 import com.truvideo.sdk.media.model.external.TruvideoSdkMediaFileUploadRequestStatus
-import com.truvideo.sdk.media.util.toIsoString
+//import com.truvideo.sdk.media.util.toIsoString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ import kotlinx.coroutines.delay
 import org.json.JSONArray
 import org.json.JSONObject
 import com.truvideo.sdk.media.model.external.TruvideoSdkMediaTags
-import truvideo.sdk.common.exceptions.TruvideoSdkException
+//import truvideo.sdk.common.exceptions.TruvideoSdkException
 import java.io.File
 import kotlinx.coroutines.withContext
 import org.json.JSONException
@@ -29,6 +29,7 @@ import com.truvideo.sdk.media.model.external.TruvideoSdkMediaModel
 import com.truvideo.sdk.media.model.external.TruvideoSdkMediaResponse
 import com.truvideo.sdk.media.model.external.TruvideoSdkMediaUploadRequest
 import com.truvideo.sdk.media.model.external.TruvideoSdkMediaMetadata
+import com.truvideo.sdk.model.exceptions.TruvideoSdkException
 
 class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
     ReactContextBaseJavaModule(reactContext) {
@@ -164,8 +165,8 @@ class TruVideoReactMediaSdkModule(reactContext: ReactApplicationContext) :
             put("id", request.id)
             put("filePath", request.filePath)
             put("fileType", request.fileType.name)
-            put("createdAt", request.createdAt.toIsoString() )
-            put("updateAt",request.updatedAt.toIsoString())
+            put("createdAt", request.createdAt )
+            put("updateAt",request.updatedAt)
             put("tags" , request.tags)
             put("metadata", request.metadata)
             put("durationMilliseconds", request.durationMilliseconds)
