@@ -727,45 +727,46 @@ class TruVideoReactMediaSdk: RCTEventEmitter {
           }
       }
 
-      @objc public func searchById(
-          _ id: String,
-          resolve: @escaping RCTPromiseResolveBlock,
-          reject: @escaping RCTPromiseRejectBlock
-      ) {
-          Task {
-              do {
-                  // getById is the correct method per swiftinterface
-                  guard let media = try await TruvideoSdkMedia.getById(id) else {
-                      resolve("{}")
-                      return
-                  }
-                  let dateFormatter = ISO8601DateFormatter()
-                  let tagJsonData = try JSONSerialization.data(withJSONObject: media.tags.dictionary)
-                  let tagString = String(data: tagJsonData, encoding: .utf8) ?? "{}"
+    @objc public func searchById(
+    _ id: String,
+    resolve: @escaping RCTPromiseResolveBlock,
+    reject: @escaping RCTPromiseRejectBlock
+) {
+    Task {
+        do {
+            guard let media = try await TruvideoSdkMedia.getById(id) else {
+                resolve(nil)
+                return
+            }
 
-                  let metaJsonData = try JSONSerialization.data(withJSONObject: media.metadata.dictionary)
-                  let metaString = String(data: metaJsonData, encoding: .utf8) ?? "{}"
+            let dateFormatter = ISO8601DateFormatter()
 
-                  let dict: [String: Any] = [
-                      "id": media.remoteId,
-                      "createdDate": dateFormatter.string(from: media.createdDate),
-                      "remoteId": media.remoteId,
-                      "uploadedFileURL": media.uploadedFileURL.absoluteString,
-                      "metaData": metaString,
-                      "tags": tagString,
-                      "transcriptionURL": media.transcriptionURL?.absoluteString ?? "",
-                      "transcriptionLength": "\(media.transcriptionLength)",
-                      "fileType": media.type.rawValue,
-                      "thumbnailUrl": media.thumbnailUrl?.absoluteString ?? "",
-                      "previewUrl": media.previewUrl?.absoluteString ?? ""
-                  ]
-                  let jsonData = try JSONSerialization.data(withJSONObject: dict)
-                  resolve(String(data: jsonData, encoding: .utf8) ?? "{}")
-              } catch {
-                  reject("SEARCH_BY_ID_ERROR", error.localizedDescription, error)
-              }
-          }
-      }
+            // Build dict matching Android's JSONObject fields exactly
+            let dict: [String: Any] = [
+                "id": media.remoteId,
+                "createdDate": dateFormatter.string(from: media.createdDate),
+                "remoteId": media.remoteId,
+                "uploadedFileURL": media.uploadedFileURL.absoluteString,
+                "metaData": media.metadata.dictionary,          // will be nested in JSON
+                "tags": media.tags.dictionary,                  // will be nested in JSON
+                "transcriptionURL": media.transcriptionURL?.absoluteString ?? "",
+                "transcriptionLength": media.transcriptionLength,
+                "fileType": media.type.rawValue,
+                "thumbnailUrl": media.thumbnailUrl?.absoluteString ?? "",
+                "previewUrl": media.previewUrl?.absoluteString ?? ""
+            ]
+
+            // ✅ Serialize to JSON string — matches Android's promise.resolve(jsonObject.toString())
+            let jsonData = try JSONSerialization.data(withJSONObject: dict)
+            let jsonString = String(data: jsonData, encoding: .utf8) ?? "{}"
+
+            resolve(jsonString)
+
+        } catch {
+            reject("SEARCH_BY_ID_ERROR", error.localizedDescription, error)
+        }
+    }
+}
 
       // ────────────────────────────────────────────────────────────────────────────
       // Helper — maps TruvideoSdkMediaStreamRequest to Dict

@@ -62,8 +62,8 @@ RCT_EXTERN_METHOD(search:(NSString *)tag
 
 // Search by remote ID
 RCT_EXTERN_METHOD(searchById:(NSString *)id
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
+                 resolve:(RCTPromiseResolveBlock)resolve
+                 reject:(RCTPromiseRejectBlock)reject)
 
 // Create stream upload request
 RCT_EXTERN_METHOD(createStreamUploadRequest:(NSString *)filePath
