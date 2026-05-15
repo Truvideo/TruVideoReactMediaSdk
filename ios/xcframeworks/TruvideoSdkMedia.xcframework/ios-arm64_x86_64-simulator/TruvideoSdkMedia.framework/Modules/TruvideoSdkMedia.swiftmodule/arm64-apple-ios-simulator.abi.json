@@ -9485,20 +9485,20 @@
       "filePath": "\/Users\/runner\/work\/truvideo-ios-sdk\/truvideo-ios-sdk\/Libraries\/Plugins\/External\/Media\/Sources\/Version.swift",
       "kind": "StringLiteral",
       "offset": 119,
-      "length": 8,
-      "value": "\"79.0.2\""
+      "length": 7,
+      "value": "\"1.0.1\""
     },
     {
       "filePath": "\/Users\/runner\/work\/truvideo-ios-sdk\/truvideo-ios-sdk\/Libraries\/Plugins\/External\/Media\/Sources\/Version.swift",
       "kind": "StringLiteral",
-      "offset": 149,
+      "offset": 148,
       "length": 6,
       "value": "\"PROD\""
     },
     {
       "filePath": "\/Users\/runner\/work\/truvideo-ios-sdk\/truvideo-ios-sdk\/Libraries\/Plugins\/External\/Media\/Sources\/Version.swift",
       "kind": "StringLiteral",
-      "offset": 177,
+      "offset": 176,
       "length": 3,
       "value": "\"1\""
     }
